@@ -1,9 +1,9 @@
 import React from "react";
-// import { useState } from "react";
+import { useContext } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import FilterCheck from "./FilterCheck";
+import FormControl from "@material-ui/core/FormControl";
+import { FormContext } from "../Context/FormContext";
 
 const CssTextField = withStyles({
   root: {
@@ -31,44 +31,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchBarInput = ({
-  handleSearch,
-  searchTerm,
-  handleFetchList,
-  handleChangeDiet,
-  checkBoxDiet,
-  handleChangeIntolerances,
-  checkBoxIntolerances,
-}) => {
+const SearchBarInput = ({ handleFetchList }) => {
   const classes = useStyles();
-  const handleKeyUp = (e) => {
-    e.preventDefault();
-    if (e.key === "Enter") {
-      handleFetchList();
-    }
+  const { searchTerm, setSearchTerm } = useContext(FormContext);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
+  // const handleKeyUp = (e) => {
+  //   e.preventDefault();
+  //   if (e.key === "Enter") {
+  //     handleFetchList();
+  //   }
+  // };
+
   return (
     <div className={classes.root}>
-      <CssTextField
-        className={classes.margin}
-        id="searchRecipe"
-        label="Enter 3 ingredients (cheese, onion..)"
-        onChange={handleSearch}
-        onKeyUp={handleKeyUp}
-        value={searchTerm}
-        variant="outlined"
-        color="secondary"
-        fullWidth
-      />
-      <FilterCheck
-        handleChangeDiet={handleChangeDiet}
-        checkBoxDiet={checkBoxDiet}
-        handleChangeIntolerances={handleChangeIntolerances}
-        checkBoxIntolerances={checkBoxIntolerances}
-      />
-      <Button variant="contained" color="secondary" onClick={handleFetchList}>
-        CoCo Search
-      </Button>
+      <FormControl>
+        <CssTextField
+          className={classes.margin}
+          id="searchRecipe"
+          label="Enter 3 ingredients (cheese, onion..)"
+          onChange={handleSearch}
+          // onKeyUp={handleKeyUp}
+          value={searchTerm}
+          variant="outlined"
+          color="secondary"
+          fullWidth
+          required
+        />
+      </FormControl>
     </div>
   );
 };

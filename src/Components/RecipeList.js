@@ -1,5 +1,4 @@
 import React from "react";
-// import useData from "../utils/useData";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
@@ -17,21 +16,18 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
 });
-
-const RecipeList = ({ recipePreview }) => {
+const RecipeList = ({ currentRecipes }) => {
   const classes = useStyles();
-  // const { datarecipePreview } = useData();
 
-  // console.log(dataIngredients);
   return (
     <Grid container>
-      {recipePreview.map((recipe) => (
+      {currentRecipes.map((recipe) => (
         <div className="recipe-preview" key={recipe.id}>
           <Link to={`/recipe/${recipe.id}`}>
             <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
-                  value={`${recipePreview.id}`}
+                  value={`${currentRecipes.id}`}
                   component="img"
                   alt={`${recipe.title}`}
                   height="140"
