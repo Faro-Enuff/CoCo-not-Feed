@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { apiKey } from "../utils/apiKey";
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
