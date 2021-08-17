@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./ScreenView/Profile";
 import Definitions from "./ScreenView/Definitions";
 import { FormContextProvider } from "./Context/FormContext";
-import PaginationRecipes from "./Components/PaginationRecipes";
+import PaginationRecipes from "./ScreenView/PaginationRecipes";
 
 function App() {
   return (

@@ -7,6 +7,7 @@ export const FormContextProvider = ({ children }) => {
   const [intolerances, setIntolerances] = useState("");
   const [diet, setDiet] = useState("");
   const [recipePreview, setRecipePreview] = useState([]);
+  const [isPending, setIsPending] = useState(true);
 
   return (
     <FormContext.Provider
@@ -19,6 +20,7 @@ export const FormContextProvider = ({ children }) => {
         setDiet,
         recipePreview,
         setRecipePreview,
+        setIsPending,
       }}
     >
       {children}

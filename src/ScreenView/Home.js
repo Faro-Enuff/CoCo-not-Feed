@@ -1,5 +1,5 @@
-import RecipeList from "../Components/RecipeList";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { apiKey } from "../utils/apiKey";
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
 import FormCon from "../Components/FormCon";
@@ -8,17 +8,16 @@ import { FormContext } from "../Context/FormContext";
 import { useHistory } from "react-router-dom";
 
 const Home = () => {
-  const { recipePreview, setRecipePreview } = useContext(FormContext);
   let history = useHistory();
-  // const [isPending, setIsPending] = useState(true);
+  const { setRecipePreview, setIsPending } = useContext(FormContext);
   // const [error, setError] = useState(null);
 
   const handleFetchList = (searchTerm, diet, intolerances) => {
     console.log("WHY");
 
-    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=745b005827924e99aafc82798efabbd5&includeIngredients=${searchTerm}&diet=${diet}&intolerances=${intolerances}`;
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&includeIngredients=${searchTerm}&diet=${diet}&intolerances=${intolerances}`;
 
-    fetchFunction(url, setRecipePreview);
+    fetchFunction(url, setRecipePreview, setIsPending);
     history.push("/recipes");
   };
   console.log("Call");
@@ -27,10 +26,6 @@ const Home = () => {
       <Grid container>
         <Grid item xs={12} sm={12} md={12}>
           <FormCon handleFetchList={handleFetchList} />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          {/* {recipePreview && <h1>{recipePreview.length}</h1>}
-          {recipePreview && <PaginationRecipes recipePreview={recipePreview} />} */}
         </Grid>
       </Grid>
     </Container>

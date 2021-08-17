@@ -1,4 +1,4 @@
-const fetchFunction = (url, setData) => {
+const fetchFunction = (url, setData, setIsPending) => {
   fetch(url)
     .then((res) => {
       if (!res.ok) {
@@ -12,6 +12,7 @@ const fetchFunction = (url, setData) => {
       } else {
         setData(data);
       }
+      setIsPending(false);
     });
 };
 

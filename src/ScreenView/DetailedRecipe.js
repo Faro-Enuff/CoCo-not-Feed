@@ -1,16 +1,19 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { apiKey } from "../utils/apiKey";
 import fetchFunction from "../utils/fetchFunction";
 
 const DetailedRecipe = () => {
   const { id } = useParams();
 
   const [recipeDetails, setRecipeDetails] = useState(null);
+  const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
     fetchFunction(
-      `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=745b005827924e99aafc82798efabbd5`,
-      setRecipeDetails
+      `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`,
+      setRecipeDetails,
+      setIsPending
     );
   }, [id]);
 
@@ -18,8 +21,7 @@ const DetailedRecipe = () => {
 
   return (
     <div className="detailed-recipe">
-      {/* {isPending && <div>Loading...</div>}
-      {error && <div>{error}</div>} */}
+      {isPending && <div>Loading...</div>}
       <h1>HEEEY {id}</h1>
       {recipeDetails && (
         <div className="recipe">
