@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -18,18 +19,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipeWinePairing = ({ wines }) => {
+const RecipeMacros = ({ nutrition }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [pairedWines, setPairedWines] = useState([]);
-  console.log(wines);
+  const [rowsMacro, setRowsMacro] = useState([]);
 
   useEffect(() => {
-    setPairedWines(
-      wines.pairedWines.map((wine) =>
-        wine.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())
-      )
+    setRowsMacro(
+      nutrition.nutrients.slice(0, 9).map((nutrient) => {
+        return {
+          name: nutrient.name,
+          amount: `${Math.round(nutrient.amount)} ${nutrient.unit}`,
+          dailyNeeds: `${nutrient.percentOfDailyNeeds} %`,
+        };
+      })
     );
+    console.log(rowsMacro);
   }, []);
 
   const handleClick = () => {
@@ -44,19 +49,25 @@ const RecipeWinePairing = ({ wines }) => {
       className={classes.root}
     >
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Wine Suggestions" />
+        <ListItemText primary="Macros" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {pairedWines &&
-          pairedWines.map((wine, index) => (
+        {rowsMacro &&
+          rowsMacro.map((item, index) => (
             <ListItem button key={index}>
-              <ListItemText primary={`${wine}`} />
+              <ListItemText
+                primary={`${item.name}`}
+                secondary={`${item.amount}  (${item.dailyNeeds})*`}
+              />
             </ListItem>
           ))}
+        <ListItem>
+          <ListItemText primary="*daily needs" />
+        </ListItem>
       </Collapse>
     </List>
   );
 };
 
-export default RecipeWinePairing;
+export default RecipeMacros;

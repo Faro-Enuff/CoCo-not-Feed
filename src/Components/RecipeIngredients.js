@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RecipeIngredients = ({ ingredients }) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const [ingreList, setIngreList] = useState(null);
 
   console.log(ingredients);
@@ -30,34 +31,48 @@ const RecipeIngredients = ({ ingredients }) => {
       ingredients.map((ingredient) => {
         return {
           name: ingredient.name.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase()),
-          amountUS: `${ingredient.measures.us.amount}, ${ingredient.measures.us.unitShort}`,
-          amountMetrics: `${ingredient.measures.metric.amount}, ${ingredient.measures.metric.unitShort}`,
+          amountUS: `${ingredient.measures.us.amount} ${ingredient.measures.us.unitShort}`,
+          amountMetrics: `${Math.round(ingredient.measures.metric.amount)} ${
+            ingredient.measures.metric.unitShort == "ml"
+              ? "g"
+              : ingredient.measures.metric.unitShort
+          }`,
           aisle: ingredient.aisle,
         };
       })
     );
   }, []);
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   return (
     <List
       component="nav"
+      label="enable dense"
       aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Shopping List
-        </ListSubheader>
-      }
       className={classes.root}
     >
-      {ingreList &&
-        ingreList.map((item, index) => (
-          <ListItem button key={index} onClick=>
-            <ListItemText
-              primary={`${item.name}`}
-              secondary={`${item.amountMetrics}`}
-            />
-          </ListItem>
-        ))}
+      <ListItem button onClick={handleClick}>
+        <ListItemText primary="Ingredients" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        {ingreList &&
+          ingreList.map((item, index) => (
+            <ListItem button key={index}>
+              <ListItemText
+                primary={`${item.name}`}
+                secondary={`${
+                  item.amountMetrics == item.amountUS
+                    ? item.amountMetrics
+                    : `${item.amountUS} or ${item.amountMetrics}`
+                }`}
+              />
+            </ListItem>
+          ))}
+      </Collapse>
     </List>
   );
 };

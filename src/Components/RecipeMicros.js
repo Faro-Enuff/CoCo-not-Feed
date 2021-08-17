@@ -18,18 +18,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RecipeWinePairing = ({ wines }) => {
+const RecipeMicros = ({ nutrition }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [pairedWines, setPairedWines] = useState([]);
-  console.log(wines);
+  const [rowsMicro, setRowsMicro] = useState([]);
 
   useEffect(() => {
-    setPairedWines(
-      wines.pairedWines.map((wine) =>
-        wine.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())
-      )
+    setRowsMicro(
+      nutrition.nutrients.slice(9).map((nutrient) => {
+        return {
+          name: nutrient.name,
+          amount: `${Math.round(nutrient.amount)} ${nutrient.unit}`,
+          dailyNeeds: `${nutrient.percentOfDailyNeeds} %`,
+        };
+      })
     );
+    console.log(rowsMicro);
   }, []);
 
   const handleClick = () => {
@@ -44,19 +48,25 @@ const RecipeWinePairing = ({ wines }) => {
       className={classes.root}
     >
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Wine Suggestions" />
+        <ListItemText primary="Micros" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {pairedWines &&
-          pairedWines.map((wine, index) => (
+        {rowsMicro &&
+          rowsMicro.map((item, index) => (
             <ListItem button key={index}>
-              <ListItemText primary={`${wine}`} />
+              <ListItemText
+                primary={`${item.name}`}
+                secondary={`${item.amount}  (${item.dailyNeeds})*`}
+              />
             </ListItem>
           ))}
+        <ListItem>
+          <ListItemText primary="*daily needs" />
+        </ListItem>
       </Collapse>
     </List>
   );
 };
 
-export default RecipeWinePairing;
+export default RecipeMicros;

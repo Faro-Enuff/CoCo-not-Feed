@@ -2,9 +2,10 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { apiKey } from "../utils/apiKey";
 import fetchFunction from "../utils/fetchFunction";
-import RecipeNutrientsMacro from "../Components/RecipeNutrientsMacro";
-import RecipeNutrientsMicro from "../Components/RecipeNutrientsMicro";
 import RecipeIngredients from "../Components/RecipeIngredients";
+import RecipeMacros from "../Components/RecipeMacros";
+import RecipeMicros from "../Components/RecipeMicros";
+import RecipeWinePairing from "../Components/RecipeWinePairing";
 
 const DetailedRecipe = () => {
   const { id } = useParams();
@@ -44,11 +45,10 @@ const DetailedRecipe = () => {
       {recipeDetails && (
         <RecipeIngredients ingredients={recipeDetails.extendedIngredients} />
       )}
-      {recipeDetails && (
-        <RecipeNutrientsMacro nutrition={recipeDetails.nutrition} />
-      )}
-      {recipeDetails && (
-        <RecipeNutrientsMicro nutrition={recipeDetails.nutrition} />
+      {recipeDetails && <RecipeMacros nutrition={recipeDetails.nutrition} />}
+      {recipeDetails && <RecipeMicros nutrition={recipeDetails.nutrition} />}
+      {recipeDetails && recipeDetails.winePairing.pairedWines && (
+        <RecipeWinePairing wines={recipeDetails.winePairing} />
       )}
     </div>
   );
