@@ -35,7 +35,12 @@ const RecipeWinePairing = ({ wines }) => {
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const handleClickBottle = (bottle) => {
+    window.open(
+      "https://www.woolworths.com.au/shop/search/products?searchTerm=" + bottle,
+      "_blank"
+    );
+  };
   return (
     <List
       component="nav"
@@ -43,17 +48,21 @@ const RecipeWinePairing = ({ wines }) => {
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      <ListItem button onClick={handleClick}>
-        <ListItemText primary="Wine Suggestions" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
+      {pairedWines && pairedWines.length !== 0 && (
+        <ListItem button onClick={handleClick}>
+          <ListItemText primary="Wine Suggestions" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+      )}
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {pairedWines &&
-          pairedWines.map((wine, index) => (
-            <ListItem button key={index}>
-              <ListItemText primary={`${wine}`} />
-            </ListItem>
-          ))}
+        {pairedWines.map((wine, index) => (
+          <ListItem button key={index}>
+            <ListItemText
+              onClick={() => handleClickBottle(wine)}
+              primary={`${wine}`}
+            />
+          </ListItem>
+        ))}
       </Collapse>
     </List>
   );

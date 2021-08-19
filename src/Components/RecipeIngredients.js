@@ -46,7 +46,13 @@ const RecipeIngredients = ({ ingredients }) => {
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const handleClickGrocery = (grocery) => {
+    window.open(
+      "https://www.woolworths.com.au/shop/search/products?searchTerm=" +
+        grocery,
+      "_blank"
+    );
+  };
   return (
     <List
       component="nav"
@@ -63,6 +69,7 @@ const RecipeIngredients = ({ ingredients }) => {
           ingreList.map((item, index) => (
             <ListItem button key={index}>
               <ListItemText
+                onClick={() => handleClickGrocery(item.name)}
                 primary={`${item.name}`}
                 secondary={`${
                   item.amountMetrics == item.amountUS

@@ -6,13 +6,13 @@ import Profile from "./ScreenView/Profile";
 import Definitions from "./ScreenView/Definitions";
 import { FormContextProvider } from "./Context/FormContext";
 import PaginationRecipes from "./ScreenView/PaginationRecipes";
+import BottomNavigationCustom from "./Components/BottomNavigationCustom";
 
 function App() {
   return (
     <Router>
       <FormContextProvider>
         <div className="App">
-          <Navbar />
           <div className="content">
             <Switch>
               <Route path="/" exact component={Home} />
@@ -22,6 +22,7 @@ function App() {
               <Route path="/definitions" exact component={Definitions} />
             </Switch>
           </div>
+          <BottomNavigationCustom />
         </div>
       </FormContextProvider>
     </Router>

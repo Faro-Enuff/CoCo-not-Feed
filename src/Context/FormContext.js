@@ -6,6 +6,8 @@ export const FormContextProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [intolerances, setIntolerances] = useState("");
   const [diet, setDiet] = useState("");
+  const [value, setValue] = useState("popularity");
+  const [order, setOrder] = useState(false);
   const [recipePreview, setRecipePreview] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
@@ -21,6 +23,10 @@ export const FormContextProvider = ({ children }) => {
         recipePreview,
         setRecipePreview,
         setIsPending,
+        value,
+        setValue,
+        order,
+        setOrder,
       }}
     >
       {children}

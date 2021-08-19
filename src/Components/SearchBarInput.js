@@ -19,14 +19,11 @@ const CssTextField = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
+    width: "100%",
     marginTop: 20,
     marginBottom: 20,
   },
   margin: {
-    margin: theme.spacing(2),
     fontWeight: "bold",
   },
 }));
