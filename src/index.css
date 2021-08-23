@@ -1,6 +1,11 @@
-.recipe-preview a {
-  text-decoration: none;
-}
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@200;300;400;500&family=Quicksand:wght@300;400;500;600;700&family=Rokkitt:wght@200;300;400;500&display=swap");
 * {
   margin: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.recipes a {
+  text-decoration: none;
 }

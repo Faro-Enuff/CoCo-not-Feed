@@ -3,6 +3,7 @@
 # Src
 src/utils/apiKey
 
+firebase.js
 # dependencies
 /node_modules
 /.pnp

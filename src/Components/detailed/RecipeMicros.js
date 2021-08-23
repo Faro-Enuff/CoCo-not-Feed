@@ -25,7 +25,7 @@ const RecipeMicros = ({ nutrition }) => {
 
   useEffect(() => {
     setRowsMicro(
-      nutrition.nutrients.slice(9).map((nutrient) => {
+      nutrition?.nutrients.slice(9).map((nutrient) => {
         return {
           name: nutrient.name,
           amount: `${Math.round(nutrient.amount)} ${nutrient.unit}`,
@@ -52,15 +52,14 @@ const RecipeMicros = ({ nutrition }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {rowsMicro &&
-          rowsMicro.map((item, index) => (
-            <ListItem button key={index}>
-              <ListItemText
-                primary={`${item.name}`}
-                secondary={`${item.amount}  (${item.dailyNeeds})*`}
-              />
-            </ListItem>
-          ))}
+        {rowsMicro?.map((item, index) => (
+          <ListItem button key={index}>
+            <ListItemText
+              primary={`${item.name}`}
+              secondary={`${item.amount}  (${item.dailyNeeds})*`}
+            />
+          </ListItem>
+        ))}
         <ListItem>
           <ListItemText primary="*daily needs" />
         </ListItem>

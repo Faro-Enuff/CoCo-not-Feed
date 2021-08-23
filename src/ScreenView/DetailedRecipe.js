@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { apiKey } from "../utils/apiKey";
 import fetchFunction from "../utils/fetchFunction";
-import RecipeIngredients from "../Components/RecipeIngredients";
-import RecipeMacros from "../Components/RecipeMacros";
-import RecipeMicros from "../Components/RecipeMicros";
-import RecipeWinePairing from "../Components/RecipeWinePairing";
-import RecipeInstructions from "../Components/RecipeInstructions";
+import RecipeIngredients from "../Components/detailed/RecipeIngredients";
+import RecipeMacros from "../Components/detailed/RecipeMacros";
+import RecipeMicros from "../Components/detailed/RecipeMicros";
+import RecipeWinePairing from "../Components/detailed/RecipeWinePairing";
+import RecipeInstructions from "../Components/detailed/RecipeInstructions";
 /////
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
@@ -22,15 +22,17 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Paper } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((muiTheme) => ({
+  detailedPage: {
+    paddingTop: muiTheme.spacing(4),
+  },
   root: {
-    maxWidth: 345,
+    maxWidth: "auto",
   },
   media: {
     height: 0,
@@ -39,15 +41,20 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
+    transition: muiTheme.transitions.create("transform", {
+      duration: muiTheme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: "#bcaaa4",
+    color: "#fff",
+  },
+  gridSpace: {
+    marginTop: 50,
+    marginBottom: 100,
   },
 }));
 
@@ -76,80 +83,92 @@ const DetailedRecipe = () => {
   };
 
   return (
-    <Container>
-      <Grid container>
+    <Container component="main" maxWidth="xs" className={classes.detailedPage}>
+      <div>
         {isPending && <div>Loading...</div>}
         {recipeDetails && (
-          <Grid item xs={12} sm={12} md={12}>
-            <Card className={classes.root}>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    CoCo
-                  </Avatar>
-                }
-                title={recipeDetails.title}
-                subheader={`Ready in ${recipeDetails.readyInMinutes} min., Servings:
+          <Grid container>
+            <Grid item xs={12}>
+              <Card className={classes.root}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      <strike>CoCo</strike>
+                    </Avatar>
+                  }
+                  title={recipeDetails.title}
+                  subheader={`Ready in ${recipeDetails.readyInMinutes} min., Servings:
         ${recipeDetails.servings}`}
-              />
-              <CardMedia
-                className={classes.media}
-                image={recipeDetails.image}
-                title={`recipe-${recipeDetails.title}`}
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  <Typography paragraph>
-                    <b>Community Score: </b> {recipeDetails.spoonacularScore} %
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={recipeDetails.image}
+                  title={`recipe-${recipeDetails.title}`}
+                />
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    <Typography paragraph>
+                      <b>Community Score: </b> {recipeDetails.spoonacularScore}{" "}
+                      %
+                    </Typography>
+                    <Typography paragraph>
+                      <b>Health Score: </b> {recipeDetails.healthScore} %
+                    </Typography>
                   </Typography>
-                  <Typography paragraph>
-                    <b>Health Score: </b> {recipeDetails.healthScore} %
-                  </Typography>
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-                <IconButton
-                  className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded,
-                  })}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  i
-                  <ExpandMoreIcon />
-                </IconButton>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                {recipeDetails && (
-                  <RecipeInstructions
-                    stepInstructions={recipeDetails.analyzedInstructions}
-                    textInstructions={recipeDetails.instructions}
-                  />
-                )}
-              </Collapse>
-            </Card>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                  <IconButton
+                    className={clsx(classes.expand, {
+                      [classes.expandOpen]: expanded,
+                    })}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    i
+                    <ExpandMoreIcon />
+                  </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  {recipeDetails && (
+                    <RecipeInstructions
+                      stepInstructions={recipeDetails.analyzedInstructions}
+                      textInstructions={recipeDetails.instructions}
+                    />
+                  )}
+                </Collapse>
+              </Card>
+            </Grid>
           </Grid>
         )}
-        <Grid item xs={12} sm={12} md={12}>
+      </div>
+      <Grid container className={classes.gridSpace}>
+        <Grid item xs={12}>
           <Paper>
             {recipeDetails && (
               <RecipeIngredients
                 ingredients={recipeDetails.extendedIngredients}
               />
             )}
+
             {recipeDetails && (
-              <RecipeMacros nutrition={recipeDetails.nutrition} />
+              <RecipeMacros nutrition={recipeDetails?.nutrition} />
             )}
+
             {recipeDetails && (
               <RecipeMicros nutrition={recipeDetails.nutrition} />
             )}
+
             {recipeDetails?.winePairing.pairedWines && (
               <RecipeWinePairing wines={recipeDetails.winePairing} />
             )}

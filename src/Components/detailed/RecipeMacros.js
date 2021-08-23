@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -26,7 +25,7 @@ const RecipeMacros = ({ nutrition }) => {
 
   useEffect(() => {
     setRowsMacro(
-      nutrition.nutrients.slice(0, 9).map((nutrient) => {
+      nutrition?.nutrients.slice(0, 9).map((nutrient) => {
         return {
           name: nutrient.name,
           amount: `${Math.round(nutrient.amount)} ${nutrient.unit}`,
@@ -53,15 +52,14 @@ const RecipeMacros = ({ nutrition }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {rowsMacro &&
-          rowsMacro.map((item, index) => (
-            <ListItem button key={index}>
-              <ListItemText
-                primary={`${item.name}`}
-                secondary={`${item.amount}  (${item.dailyNeeds})*`}
-              />
-            </ListItem>
-          ))}
+        {rowsMacro?.map((item, index) => (
+          <ListItem button key={index}>
+            <ListItemText
+              primary={`${item.name}`}
+              secondary={`${item.amount}  (${item.dailyNeeds})*`}
+            />
+          </ListItem>
+        ))}
         <ListItem>
           <ListItemText primary="*daily needs" />
         </ListItem>

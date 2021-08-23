@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Grid from "@material-ui/core/Grid";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import RecipeInstructionsAccordion from "./RecipeInstructionsAccordion";
 
 const RecipeInstructions = ({ stepInstructions, textInstructions }) => {
   const [instructionScheme, setInstructionScheme] = useState(false);
@@ -21,9 +21,7 @@ const RecipeInstructions = ({ stepInstructions, textInstructions }) => {
       {instructionScheme ? (
         stepInstructions.length ? (
           stepInstructions[0].steps.map((item, key) => (
-            <Typography paragraph key={key}>
-              {item.number}. {item.step}
-            </Typography>
+            <RecipeInstructionsAccordion key={key} item={item} />
           ))
         ) : (
           <Typography paragraph>{sorryText}</Typography>

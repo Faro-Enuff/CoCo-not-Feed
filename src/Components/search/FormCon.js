@@ -1,0 +1,121 @@
+import React, { useContext } from "react";
+import { FormContext } from "../../Context/FormContext";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import DialogRadio from "./DialogRadio";
+import DialogCheckDiet from "./DialogCheckDIet";
+import DialogCheckIntolerances from "./DialogCheckIntolerance";
+import SearchBarInput from "./SearchBarInput";
+import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
+import Avatar from "@material-ui/core/Avatar";
+import logo from "./logo.jpg";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles((muiTheme) => ({
+  heading: {
+    marginBottom: 50,
+  },
+  logoPosition: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  logo: {
+    width: muiTheme.spacing(10),
+    height: muiTheme.spacing(10),
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center,",
+    textAlign: "center",
+  },
+  formControl: {
+    width: "100%", // Fix IE 11 issue.
+    padding: 0,
+    margin: 0,
+  },
+  btn: {
+    display: "flex",
+    justifyContent: "center",
+    minWidth: "90%",
+    minHeight: 30,
+    marginBottom: 50,
+    fontWeight: "bold",
+    borderRadius: 25,
+    opacity: 0.8,
+  },
+}));
+
+const FormCon = ({ handleFetchList }) => {
+  const classes = useStyles();
+
+  const { search } = useContext(FormContext);
+
+  const handlerButton = () => {
+    handleFetchList(search);
+  };
+  console.log(search);
+  return (
+    <Container component="main" maxWIdth="xs">
+      <div className={classes.paper}>
+        <FormControl className={classes.formControl}>
+          <Grid
+            container
+            spacing={0}
+            alignItems="center"
+            justify="center"
+            style={{ minHeight: "100vh" }}
+          >
+            <Grid item xs={12}>
+              <Typography className={classes.heading}>
+                {/* <div className={classes.logoPosition}>
+                  <Avatar
+                    alt="logo"
+                    src={logo}
+                    className={classes.logo}
+                    variant="circle"
+                  />
+                </div> */}
+                <h3>My</h3>
+                <h2>
+                  <strike>CoConot</strike>{" "}
+                </h2>
+                <h3>Feed</h3>
+                <div className={classes.logoPosition}>
+                  <Avatar
+                    alt="logo"
+                    src={logo}
+                    className={classes.logo}
+                    variant="circle"
+                  />
+                </div>
+              </Typography>
+              <SearchBarInput />
+              <DialogCheckDiet />
+              <DialogCheckIntolerances />
+              <DialogRadio />
+            </Grid>
+            <div className={classes.btn}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                onClick={handlerButton}
+                className={classes.btn}
+                size="large"
+              >
+                CoCo Search
+              </Button>
+            </div>
+          </Grid>
+        </FormControl>
+      </div>
+    </Container>
+  );
+};
+
+export default FormCon;

@@ -3,12 +3,11 @@ import { useState, useEffect, useContext } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { FormContext } from "../Context/FormContext";
+import { FormContext } from "../../Context/FormContext";
 
 const FilterCheckIntolerances = () => {
-  const { intolerances, setIntolerances } = useContext(FormContext);
+  const { search, setSearch } = useContext(FormContext);
 
   const [checkBoxIntolerances, setCheckBoxIntolerances] = useState({
     Gluten: false,
@@ -31,12 +30,11 @@ const FilterCheckIntolerances = () => {
     const int = Object.keys(checkBoxIntolerances)
       .filter((property) => checkBoxIntolerances[property])
       .join(",");
-    setIntolerances(int);
+    setSearch({ ...search, intolerances: int });
   }, [checkBoxIntolerances]);
   return (
     <div>
       <FormControl>
-        <FormLabel>Intolerances</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={
@@ -44,6 +42,7 @@ const FilterCheckIntolerances = () => {
                 checked={Gluten}
                 onChange={handleChangeIntolerances}
                 name="Gluten"
+                color="primary"
               />
             }
             label="Gluten"
@@ -54,6 +53,7 @@ const FilterCheckIntolerances = () => {
                 checked={Dairy}
                 onChange={handleChangeIntolerances}
                 name="Dairy"
+                color="primary"
               />
             }
             label="Dairy"
@@ -64,6 +64,7 @@ const FilterCheckIntolerances = () => {
                 checked={Peanut}
                 onChange={handleChangeIntolerances}
                 name="Peanut"
+                color="primary"
               />
             }
             label="Peanut"
@@ -74,6 +75,7 @@ const FilterCheckIntolerances = () => {
                 checked={Soy}
                 onChange={handleChangeIntolerances}
                 name="Soy"
+                color="primary"
               />
             }
             label="Soy"
@@ -84,6 +86,7 @@ const FilterCheckIntolerances = () => {
                 checked={Egg}
                 onChange={handleChangeIntolerances}
                 name="Egg"
+                color="primary"
               />
             }
             label="Egg"

@@ -3,12 +3,11 @@ import { useState, useEffect, useContext } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { FormContext } from "../Context/FormContext";
+import { FormContext } from "../../Context/FormContext";
 
 const FilterCheckDiet = () => {
-  const { diet, setDiet } = useContext(FormContext);
+  const { search, setSearch } = useContext(FormContext);
 
   const [checkBoxDiet, setCheckBoxDiet] = useState({
     Vegan: false,
@@ -30,13 +29,12 @@ const FilterCheckDiet = () => {
     const di = Object.keys(checkBoxDiet)
       .filter((property) => checkBoxDiet[property])
       .join(",");
-    setDiet(di);
+    setSearch({ ...search, diet: di });
   }, [checkBoxDiet]);
 
   return (
     <div>
       <FormControl>
-        <FormLabel>Diet</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={
@@ -44,6 +42,7 @@ const FilterCheckDiet = () => {
                 checked={Vegan}
                 onChange={handleChangeDiet}
                 name="Vegan"
+                color="primary"
               />
             }
             label="Vegan"
@@ -54,6 +53,7 @@ const FilterCheckDiet = () => {
                 checked={Vegetarian}
                 onChange={handleChangeDiet}
                 name="Vegetarian"
+                color="primary"
               />
             }
             label="Vegetarian"
@@ -64,6 +64,7 @@ const FilterCheckDiet = () => {
                 checked={Pescetarian}
                 onChange={handleChangeDiet}
                 name="Pescetarian"
+                color="primary"
               />
             }
             label="Pescetarian"
@@ -74,6 +75,7 @@ const FilterCheckDiet = () => {
                 checked={Paleo}
                 onChange={handleChangeDiet}
                 name="Paleo"
+                color="primary"
               />
             }
             label="Paleo"

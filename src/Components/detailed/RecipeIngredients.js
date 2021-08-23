@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -33,7 +32,7 @@ const RecipeIngredients = ({ ingredients }) => {
           name: ingredient.name.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase()),
           amountUS: `${ingredient.measures.us.amount} ${ingredient.measures.us.unitShort}`,
           amountMetrics: `${Math.round(ingredient.measures.metric.amount)} ${
-            ingredient.measures.metric.unitShort == "ml"
+            ingredient.measures.metric.unitShort === "ml"
               ? "g"
               : ingredient.measures.metric.unitShort
           }`,
@@ -65,20 +64,19 @@ const RecipeIngredients = ({ ingredients }) => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {ingreList &&
-          ingreList.map((item, index) => (
-            <ListItem button key={index}>
-              <ListItemText
-                onClick={() => handleClickGrocery(item.name)}
-                primary={`${item.name}`}
-                secondary={`${
-                  item.amountMetrics == item.amountUS
-                    ? item.amountMetrics
-                    : `${item.amountUS} or ${item.amountMetrics}`
-                }`}
-              />
-            </ListItem>
-          ))}
+        {ingreList?.map((item, index) => (
+          <ListItem button key={index}>
+            <ListItemText
+              onClick={() => handleClickGrocery(item.name)}
+              primary={`${item.name}`}
+              secondary={`${
+                item.amountMetrics == item.amountUS
+                  ? item.amountMetrics
+                  : `${item.amountUS} or ${item.amountMetrics}`
+              }`}
+            />
+          </ListItem>
+        ))}
       </Collapse>
     </List>
   );

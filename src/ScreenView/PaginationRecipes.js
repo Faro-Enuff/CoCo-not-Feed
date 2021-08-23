@@ -1,12 +1,18 @@
 import React from "react";
 import { useState, useContext, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
 import RecipeList from "../Components/RecipeList";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { FormContext } from "../Context/FormContext";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((muiTheme) => ({
+  recipePreview: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   ul: {
     listStyle: "none",
     padding: 0,
@@ -18,7 +24,10 @@ const useStyles = makeStyles({
     width: 100,
     height: 100,
   },
-});
+  pageLink: {
+    marginTop: muiTheme.spacing(4),
+  },
+}));
 
 const PaginationRecipes = () => {
   const classes = useStyles();
@@ -49,31 +58,40 @@ const PaginationRecipes = () => {
   };
 
   return (
-    <div>
-      <Grid item xs={12} sm={12} md={12}>
-        {currentRecipes ? (
-          <RecipeList currentRecipes={currentRecipes} />
-        ) : (
-          <div className="loader">Loading...</div>
-        )}
-      </Grid>
-      <Grid item xs={12} sm={12} md={12}>
-        <nav>
-          <ul className={classes.ul}>
-            {pageNumbers.length >= 1 &&
-              pageNumbers.map((number) => (
-                <li key={number} className="page-item">
-                  <Button>
-                    <a onClick={() => paginate(number)} className="page-link">
-                      {number}
-                    </a>
-                  </Button>
-                </li>
-              ))}
-          </ul>
-        </nav>
-      </Grid>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <div className={classes.recipePreview}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            {currentRecipes ? (
+              <RecipeList currentRecipes={currentRecipes} />
+            ) : (
+              <div className="loader">Loading...</div>
+            )}
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <nav>
+              <ul className={classes.ul}>
+                {pageNumbers.length >= 1 &&
+                  pageNumbers.map((number) => (
+                    <li key={number} className="page-item">
+                      <Button>
+                        <a
+                          onClick={() => paginate(number)}
+                          className={classes.pageLink}
+                        >
+                          {number}
+                        </a>
+                      </Button>
+                    </li>
+                  ))}
+              </ul>
+            </nav>
+          </Grid>
+        </Grid>
+      </div>
+    </Container>
   );
 };
 
