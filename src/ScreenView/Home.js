@@ -9,13 +9,19 @@ import { useHistory } from "react-router-dom";
 
 const Home = () => {
   let history = useHistory();
-  const { setRecipePreview, setIsPending } = useContext(FormContext);
+  const { setRecipePreview, setIsPending, order } = useContext(FormContext);
   // const [error, setError] = useState(null);
 
   const handleFetchList = (search) => {
     console.log("WHY");
 
-    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&includeIngredients=${search.searchTerm}&diet=${search.diet}&intolerances=${search.intolerances}&instructionsRequired=true&sort=${search.preference}&sortDirection=${search.preferenceOrder}`;
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&includeIngredients=${
+      search.searchTerm
+    }&diet=${search.diet}&intolerances=${
+      search.intolerances
+    }&instructionsRequired=true&sort=${search.preference}&sortDirection=${
+      order ? "asc" : "desc"
+    }`;
     console.log(url);
     fetchFunction(url, setRecipePreview, setIsPending);
     history.push("/recipes");

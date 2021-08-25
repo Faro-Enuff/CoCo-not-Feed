@@ -23,7 +23,7 @@ const RecipeIngredients = ({ ingredients }) => {
   const [open, setOpen] = useState(false);
   const [ingreList, setIngreList] = useState(null);
 
-  console.log(ingredients);
+  // console.log(ingredients);
 
   useEffect(() => {
     setIngreList(

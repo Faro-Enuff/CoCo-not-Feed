@@ -12,18 +12,20 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
-const useStyles = makeStyles((muiTheme) => ({
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    marginTop: theme.spacing(4),
+  },
   container: {
     paddingRight: 0,
     paddingLeft: 0,
-    marginTop: muiTheme.spacing(4),
   },
   root: {
     minWidth: "100%",
     backgroundColor: "#fff",
     padding: 0,
+    borderRadius: 20,
   },
-  background: {},
 }));
 
 const RecipeList = ({ currentRecipes }) => {
@@ -35,7 +37,7 @@ const RecipeList = ({ currentRecipes }) => {
         {currentRecipes.map((recipe) => (
           <div className="recipes" key={recipe.id}>
             <Link to={`/recipe/${recipe.id}`}>
-              <Grid container spacing={10} className={classes.grid}>
+              <Grid container className={classes.grid}>
                 <Grid item xs={12}>
                   <Card className={classes.root}>
                     <CardActionArea>

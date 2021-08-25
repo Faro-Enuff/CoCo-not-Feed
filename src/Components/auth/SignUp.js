@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../../Context/authContext";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -46,6 +47,7 @@ const useStyles = makeStyles((muiTheme) => ({
   },
 }));
 const SignUp = () => {
+  let history = useHistory();
   const classes = useStyles();
   const [profile, setProfile] = useState({
     email: "",
@@ -63,6 +65,7 @@ const SignUp = () => {
     //prevent react from refreshing the page
     event.preventDefault();
     signUp(profile);
+    history.push("/");
   };
   console.log(profile);
   return (

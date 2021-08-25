@@ -18,14 +18,18 @@ const useStyles = makeStyles((muiTheme) => ({
     padding: 0,
     margin: 0,
     display: "flex",
+    marginBottom: muiTheme.spacing(10),
   },
-  buttonA: {
+  btnArea: {
+    display: "flex",
+    maxWidth: "100%",
+  },
+  btn: {
     display: "block",
-    width: 100,
-    height: 100,
-  },
-  pageLink: {
     marginTop: muiTheme.spacing(4),
+    fontWeight: "bold",
+    borderRadius: 25,
+    marginLeft: 20,
   },
 }));
 
@@ -71,23 +75,22 @@ const PaginationRecipes = () => {
         </Grid>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <nav>
+            <div className={classes.btnArea}>
               <ul className={classes.ul}>
                 {pageNumbers.length >= 1 &&
                   pageNumbers.map((number) => (
                     <li key={number} className="page-item">
-                      <Button>
-                        <a
-                          onClick={() => paginate(number)}
-                          className={classes.pageLink}
-                        >
-                          {number}
-                        </a>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        className={classes.btn}
+                      >
+                        <a onClick={() => paginate(number)}>{number}</a>
                       </Button>
                     </li>
                   ))}
               </ul>
-            </nav>
+            </div>
           </Grid>
         </Grid>
       </div>

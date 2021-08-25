@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { AuthContext } from "../../Context/authContext";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -47,6 +48,7 @@ const useStyles = makeStyles((muiTheme) => ({
 }));
 
 const SignIn = () => {
+  let history = useHistory();
   const classes = useStyles();
 
   const [profile, setProfile] = useState({
@@ -59,9 +61,14 @@ const SignIn = () => {
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
+  const handleGoogleLink = () => {
+    signInWithGooglePopUp();
+    history.push("/");
+  };
   const handleOnSubmit = (event) => {
     event.preventDefault();
     signIn(profile);
+    history.push("/");
   };
   console.log(profile);
   return (
@@ -102,11 +109,7 @@ const SignIn = () => {
             value={profile.password}
           />
           <Grid item xs>
-            <Link
-              variant="body2"
-              color="secondary"
-              onClick={signInWithGooglePopUp}
-            >
+            <Link variant="body2" color="secondary" onClick={handleGoogleLink}>
               <b>Or, sign in with your Google Account.</b>
             </Link>
           </Grid>

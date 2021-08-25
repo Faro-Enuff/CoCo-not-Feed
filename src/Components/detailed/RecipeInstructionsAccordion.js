@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RecipeInstructionsAccordion = ({ item }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <Accordion className={classes.accordion}>

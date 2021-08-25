@@ -5,11 +5,13 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "../Context/authContext";
 import { Typography } from "@material-ui/core";
+import { firestore } from "../Context/firestoreContext";
 
 const Profile = () => {
   let history = useHistory();
   const { user, signOut } = useContext(AuthContext);
   const backup = "Not logged in";
+
   console.log(user?.email);
   return (
     <Container component="main" maxWidth="xs">

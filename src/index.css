@@ -2,6 +2,9 @@
 * {
   margin: 0;
 }
+.App {
+  height: 100vh;
+}
 body {
   margin: 0;
   padding: 0;

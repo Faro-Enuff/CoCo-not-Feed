@@ -33,7 +33,7 @@ const RecipeMicros = ({ nutrition }) => {
         };
       })
     );
-    console.log(rowsMicro);
+    // console.log(rowsMicro);
   }, []);
 
   const handleClick = () => {

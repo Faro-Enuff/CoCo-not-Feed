@@ -9,7 +9,6 @@ export const FormContextProvider = ({ children }) => {
     intolerances: "",
     diet: "",
     preference: "popularity",
-    preferenceOrder: order ? "asc" : "desc",
   });
   const [recipePreview, setRecipePreview] = useState([]);
   const [isPending, setIsPending] = useState(true);

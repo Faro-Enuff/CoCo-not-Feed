@@ -13,14 +13,12 @@ import { AuthContext } from "../../Context/authContext";
 
 const useStyles = makeStyles({
   root: {
-    display: "flex",
     width: "100%",
     backgroundColor: "#a1887f",
   },
   navigation: {
     width: "100%",
   },
-  BottomNavigation: {},
   appBar: {
     top: "auto",
     position: "fixed",
@@ -49,9 +47,9 @@ const BottomNavigationCustom = () => {
   console.log(`user`, user);
   return (
     <Container component="main" maxWidth="xs">
-      <Grid container spacing={0}>
+      <Grid container>
         <Grid item xs={12}>
-          <div className="navigation">
+          <div className={classes.navigation}>
             <AppBar
               position="fixed"
               color="secondary"

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { apiKey } from "../utils/apiKey";
 import fetchFunction from "../utils/fetchFunction";
+import { FirestoreContext } from "../Context/firestoreContext";
 import RecipeIngredients from "../Components/detailed/RecipeIngredients";
 import RecipeMacros from "../Components/detailed/RecipeMacros";
 import RecipeMicros from "../Components/detailed/RecipeMicros";
@@ -25,7 +25,6 @@ import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((muiTheme) => ({
   detailedPage: {
@@ -33,6 +32,7 @@ const useStyles = makeStyles((muiTheme) => ({
   },
   root: {
     maxWidth: "auto",
+    borderRadius: 20,
   },
   media: {
     height: 0,
@@ -52,16 +52,17 @@ const useStyles = makeStyles((muiTheme) => ({
     backgroundColor: "#bcaaa4",
     color: "#fff",
   },
-  gridSpace: {
+  paper: {
     marginTop: 50,
     marginBottom: 100,
+    borderRadius: 20,
   },
 }));
 
 const DetailedRecipe = () => {
   const classes = useStyles();
   const { id } = useParams();
-
+  const { addFavorite, deleteFavorite } = useContext(FirestoreContext);
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [expanded, setExpanded] = useState(false);
@@ -82,6 +83,12 @@ const DetailedRecipe = () => {
     setExpanded(!expanded);
   };
 
+  const handleFavoriteClick = () => {
+    console.log(id);
+    console.log(recipeDetails);
+    addFavorite(recipeDetails);
+  };
+  console.log(recipeDetails);
   return (
     <Container component="main" maxWidth="xs" className={classes.detailedPage}>
       <div>
@@ -121,7 +128,10 @@ const DetailedRecipe = () => {
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
+                  <IconButton
+                    aria-label="add to favorites"
+                    onClick={handleFavoriteClick}
+                  >
                     <FavoriteIcon />
                   </IconButton>
                   <IconButton aria-label="share">
@@ -154,7 +164,7 @@ const DetailedRecipe = () => {
       </div>
       <Grid container className={classes.gridSpace}>
         <Grid item xs={12}>
-          <Paper>
+          <Card className={classes.paper}>
             {recipeDetails && (
               <RecipeIngredients
                 ingredients={recipeDetails.extendedIngredients}
@@ -172,7 +182,7 @@ const DetailedRecipe = () => {
             {recipeDetails?.winePairing.pairedWines && (
               <RecipeWinePairing wines={recipeDetails.winePairing} />
             )}
-          </Paper>
+          </Card>
         </Grid>
       </Grid>
     </Container>

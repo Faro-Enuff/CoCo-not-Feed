@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect } from "react";
-import firebase, { provider } from "../firebase";
+import firebase, { googleAuth } from "../firebase";
 
 export const AuthContext = createContext();
 
@@ -24,7 +24,7 @@ export const AuthContextProvider = ({ children }) => {
   const signInWithGooglePopUp = () => {
     firebase
       .auth()
-      .signInWithPopup(provider)
+      .signInWithPopup(googleAuth)
       .then((result) => {
         console.log("User has signed in");
         // The signed-in user info.

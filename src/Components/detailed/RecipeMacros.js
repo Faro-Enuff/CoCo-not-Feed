@@ -33,7 +33,7 @@ const RecipeMacros = ({ nutrition }) => {
         };
       })
     );
-    console.log(rowsMacro);
+    // console.log(rowsMacro);
   }, []);
 
   const handleClick = () => {
