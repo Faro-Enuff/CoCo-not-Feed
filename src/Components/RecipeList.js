@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { FirestoreContext } from "../../src/Context/firestoreContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -29,54 +29,62 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecipeList = ({ currentRecipes }) => {
+  const { likes, allocateLikes } = useContext(FirestoreContext);
   const classes = useStyles();
-
+  console.log(currentRecipes);
+  useEffect(() => {
+    allocateLikes(currentRecipes);
+  }, [currentRecipes]);
+  // console.log(likes);
   return (
-    <Container component="main" maxWidth="xs" className={classes.container}>
-      <div className="recipeImportant">
-        {currentRecipes.map((recipe) => (
-          <div className="recipes" key={recipe.id}>
-            <Link to={`/recipe/${recipe.id}`}>
-              <Grid container className={classes.grid}>
-                <Grid item xs={12}>
-                  <Card className={classes.root}>
-                    <CardActionArea>
-                      <CardMedia
-                        value={`${currentRecipes.id}`}
-                        component="img"
-                        alt={`${recipe.title}`}
-                        height="140"
-                        image={recipe.image}
-                        title={`${recipe.title}`}
-                      />
-                      <CardContent className={classes.background}>
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          component="h2"
-                          color="secondary"
-                        >
-                          {recipe.title}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Button
-                        size="small"
+    <div className="recipeImportant">
+      {currentRecipes.map((recipe, key) => (
+        <div className="recipes" key={recipe.id}>
+          <Link to={`/recipe/${recipe.id}`}>
+            <Grid container className={classes.grid}>
+              <Grid item xs={12}>
+                <Card className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      value={`${currentRecipes.id}`}
+                      component="img"
+                      alt={`${recipe.title}`}
+                      height="140"
+                      image={recipe.image}
+                      title={`${recipe.title}`}
+                    />
+                    <CardContent className={classes.background}>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="h2"
                         color="secondary"
-                        endIcon={<FavoriteBorderIcon />}
                       >
-                        Favorite
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
+                        {recipe.title}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="secondary"
+                      startIcon={<FavoriteBorderIcon />}
+                    >
+                      {likes
+                        ?.filter((e) => e.title === recipe.title)
+                        .map((selectedLikes) => (
+                          <p>{selectedLikes.likes.length}</p>
+                        ))}
+                      {/* Community Likes {likes[key].likes.length} */}
+                    </Button>
+                  </CardActions>
+                </Card>
               </Grid>
-            </Link>
-          </div>
-        ))}
-      </div>
-    </Container>
+            </Grid>
+          </Link>
+        </div>
+      ))}
+    </div>
   );
 };
 

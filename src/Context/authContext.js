@@ -1,10 +1,26 @@
 import { useState, createContext, useEffect } from "react";
-import firebase, { googleAuth } from "../firebase";
+import firebase, { googleAuth, db } from "../firebase";
+import firebaseapp from "firebase/app";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // Create the first Data base
+  const addDocFavorite = (user) => {
+    db.collection("faves")
+      .doc(user.uid)
+      .set({
+        recipes: [],
+        timestamp: firebaseapp.firestore.FieldValue.serverTimestamp(),
+      })
+      .then((docRef) => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+  };
 
   useEffect(() => {
     //Auth State Observer
@@ -14,6 +30,7 @@ export const AuthContextProvider = ({ children }) => {
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         console.log(`user`, uid);
+        // setUser(user);
       } else {
         // User is signed out
         setUser(null);
@@ -54,6 +71,7 @@ export const AuthContextProvider = ({ children }) => {
         const user = userCredential.user;
         setUser(user);
         console.log(`user`, user);
+        addDocFavorite(user);
       })
       .catch((error) => {
         const errorCode = error.code;

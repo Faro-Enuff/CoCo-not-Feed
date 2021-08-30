@@ -60,7 +60,7 @@ const FormCon = ({ handleFetchList }) => {
   };
   console.log(search);
   return (
-    <Container component="main" maxWIdth="xs">
+    <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <FormControl className={classes.formControl}>
           <Grid
@@ -71,29 +71,22 @@ const FormCon = ({ handleFetchList }) => {
             style={{ minHeight: "100vh" }}
           >
             <Grid item xs={12}>
-              <Typography className={classes.heading}>
-                {/* <div className={classes.logoPosition}>
-                  <Avatar
-                    alt="logo"
-                    src={logo}
-                    className={classes.logo}
-                    variant="circle"
-                  />
-                </div> */}
-                <h3>My</h3>
-                <h2>
+              <div className={classes.heading}>
+                <Typography variant="h5">My</Typography>
+                <Typography variant="h3">
                   <strike>CoConot</strike>{" "}
-                </h2>
-                <h3>Feed</h3>
+                </Typography>
+                <Typography variant="h5">Feed</Typography>
                 <div className={classes.logoPosition}>
                   <Avatar
                     alt="logo"
                     src={logo}
                     className={classes.logo}
-                    variant="circle"
+                    variant="circular"
                   />
                 </div>
-              </Typography>
+              </div>
+
               <SearchBarInput />
               <DialogCheckDiet />
               <DialogCheckIntolerances />

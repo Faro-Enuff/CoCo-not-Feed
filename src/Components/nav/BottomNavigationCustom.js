@@ -44,7 +44,7 @@ const BottomNavigationCustom = () => {
   const goPage = (page) => {
     history.push(page);
   };
-  console.log(`user`, user);
+  console.log(`user`, user?.uid);
   return (
     <Container component="main" maxWidth="xs">
       <Grid container>

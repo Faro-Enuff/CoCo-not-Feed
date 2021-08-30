@@ -62,10 +62,12 @@ const useStyles = makeStyles((muiTheme) => ({
 const DetailedRecipe = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const { addFavorite, deleteFavorite } = useContext(FirestoreContext);
+  const { addNewFavorite, deleteFavorite, favorites, getLikes } =
+    useContext(FirestoreContext);
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [expanded, setExpanded] = useState(false);
+  const [colorIcon, setColorIcon] = useState(false);
 
   ///////////////////////////////////////////////////////
   //Fetch
@@ -78,17 +80,38 @@ const DetailedRecipe = () => {
   }, [id]);
 
   ///////////
+  useEffect(() => {
+    if (favorites.filter((e) => e.id == id).length > 0) {
+      console.log("Yuhu");
+      setColorIcon(!colorIcon);
+    }
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const handleFavoriteClick = () => {
-    console.log(id);
-    console.log(recipeDetails);
-    addFavorite(recipeDetails);
+    // console.log(id);
+    // console.log(recipeDetails);
+    if (colorIcon) {
+      deleteFavorite(
+        recipeDetails.title,
+        recipeDetails.image,
+        recipeDetails.id
+      );
+      setColorIcon(false);
+    } else {
+      addNewFavorite(
+        recipeDetails.title,
+        recipeDetails.image,
+        recipeDetails.id
+      );
+      setColorIcon(true);
+    }
+    getLikes(id, recipeDetails.title);
   };
-  console.log(recipeDetails);
+  // console.log(recipeDetails);
   return (
     <Container component="main" maxWidth="xs" className={classes.detailedPage}>
       <div>
@@ -116,7 +139,7 @@ const DetailedRecipe = () => {
                   <Typography
                     variant="body2"
                     color="textSecondary"
-                    component="p"
+                    component="div"
                   >
                     <Typography paragraph>
                       <b>Community Score: </b> {recipeDetails.spoonacularScore}{" "}
@@ -132,7 +155,11 @@ const DetailedRecipe = () => {
                     aria-label="add to favorites"
                     onClick={handleFavoriteClick}
                   >
-                    <FavoriteIcon />
+                    {colorIcon ? (
+                      <FavoriteIcon color="primary" />
+                    ) : (
+                      <FavoriteIcon />
+                    )}
                   </IconButton>
                   <IconButton aria-label="share">
                     <ShareIcon />
