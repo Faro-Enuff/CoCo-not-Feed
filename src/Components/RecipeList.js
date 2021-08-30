@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     borderRadius: 20,
   },
+  likeButton: {
+    display: "flex",
+    textAlign: "right",
+    justifyContent: "right",
+    alignItems: "right",
+  },
 }));
 
 const RecipeList = ({ currentRecipes }) => {
@@ -64,19 +70,20 @@ const RecipeList = ({ currentRecipes }) => {
                       </Typography>
                     </CardContent>
                   </CardActionArea>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      color="secondary"
-                      startIcon={<FavoriteBorderIcon />}
-                    >
-                      {likes
-                        ?.filter((e) => e.title === recipe.title)
-                        .map((selectedLikes) => (
-                          <p>{selectedLikes.likes.length}</p>
-                        ))}
-                      {/* Community Likes {likes[key].likes.length} */}
-                    </Button>
+                  <CardActions className={classes.likeButton}>
+                    <div>
+                      <Button
+                        size="small"
+                        color="secondary"
+                        endIcon={<FavoriteBorderIcon />}
+                      >
+                        {likes
+                          ?.filter((e) => e.title === recipe.title)
+                          .map((selectedLikes) => (
+                            <p>{selectedLikes.likes.length}</p>
+                          ))}
+                      </Button>
+                    </div>
                   </CardActions>
                 </Card>
               </Grid>
