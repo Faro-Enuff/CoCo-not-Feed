@@ -15,7 +15,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((muiTheme) => ({
   heading: {
-    marginBottom: 50,
+    margin: "5%",
   },
   logoPosition: {
     display: "flex",
@@ -27,10 +27,6 @@ const useStyles = makeStyles((muiTheme) => ({
     height: muiTheme.spacing(10),
   },
   paper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center,",
     textAlign: "center",
   },
   formControl: {
@@ -39,11 +35,8 @@ const useStyles = makeStyles((muiTheme) => ({
     margin: 0,
   },
   btn: {
-    display: "flex",
-    justifyContent: "center",
     minWidth: "90%",
-    minHeight: 30,
-    marginBottom: 50,
+    marginBottom: "20%",
     fontWeight: "bold",
     borderRadius: 25,
     opacity: 0.8,
@@ -92,18 +85,20 @@ const FormCon = ({ handleFetchList }) => {
               <DialogCheckIntolerances />
               <DialogRadio />
             </Grid>
-            <div className={classes.btn}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="secondary"
-                onClick={handlerButton}
-                className={classes.btn}
-                size="large"
-              >
-                CoCo Search
-              </Button>
-            </div>
+            <Grid item xs={12}>
+              <div className={classes.btn}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  onClick={handlerButton}
+                  className={classes.btn}
+                  size="large"
+                >
+                  CoCo Search
+                </Button>
+              </div>
+            </Grid>
           </Grid>
         </FormControl>
       </div>

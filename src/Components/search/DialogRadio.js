@@ -16,7 +16,7 @@ const useStyles = makeStyles((muiTheme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10,
+    margin: "10%",
   },
   popup: {
     position: "absolute",

@@ -11,7 +11,7 @@ import RecipeList from "../Components/RecipeList";
 
 const useStyles = makeStyles((muiTheme) => ({
   heading: {
-    marginBottom: 50,
+    marginBottom: "10%",
   },
 }));
 

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     width: "100%",
-    marginBottom: 20,
+    margin: "0",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
