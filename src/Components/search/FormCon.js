@@ -19,8 +19,7 @@ const useStyles = makeStyles((muiTheme) => ({
   },
   logoPosition: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    justifyContent: "center",
   },
   logo: {
     width: muiTheme.spacing(10),

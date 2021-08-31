@@ -5,7 +5,7 @@ import firebaseapp from "firebase/app";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("Not logged in");
   // Create the first Data base
   const addDocFavorite = (user) => {
     db.collection("faves")

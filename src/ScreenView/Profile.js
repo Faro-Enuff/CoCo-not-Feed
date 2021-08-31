@@ -13,6 +13,17 @@ const useStyles = makeStyles((muiTheme) => ({
   heading: {
     marginBottom: "10%",
   },
+  favoriteContainer: {
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  favoriteRecipes: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "20%",
+  },
 }));
 
 const Profile = () => {
@@ -20,7 +31,6 @@ const Profile = () => {
   const classes = useStyles();
   const { user, signOut } = useContext(AuthContext);
   const { getFavorites, favorites } = useContext(FirestoreContext);
-  const backup = "Not logged in";
 
   useEffect(() => {
     getFavorites();
@@ -34,7 +44,11 @@ const Profile = () => {
   console.log(favorites);
   console.log(user?.email);
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      className={classes.favoriteContainer}
+    >
       <Grid container>
         <Grid item xs={12}>
           {user ? (
@@ -42,17 +56,17 @@ const Profile = () => {
           ) : (
             <Button onClick={() => history.push("/signin")}>Sign in</Button>
           )}
-          {user ? (
-            <div className={classes.heading}>
-              <Typography variant="h5">{user.email}</Typography>
-              <Typography variant="h4">
-                My <strike>CoConot</strike> - Faves
-              </Typography>
-              {user && <RecipeList currentRecipes={favorites} />}
-            </div>
-          ) : (
-            <Typography variant="h5">{backup}</Typography>
-          )}
+          <div className={classes.favoriteRecipes}>
+            {user && (
+              <div className={classes.heading}>
+                <Typography variant="h5">{user.email}</Typography>
+                <Typography variant="h4">
+                  My <strike>CoConot</strike> - Faves
+                </Typography>
+                {user && <RecipeList currentRecipes={favorites} />}
+              </div>
+            )}
+          </div>
         </Grid>
       </Grid>
     </Container>

@@ -4,6 +4,7 @@
 src/utils/apiKey
 
 firebase.js
+apiKey.js
 # dependencies
 /node_modules
 /.pnp
