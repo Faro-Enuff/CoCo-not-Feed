@@ -69,6 +69,11 @@ export const AuthContextProvider = ({ children }) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+
+        user.updateProfile({ displayName: name });
+      })
+      .then(() => {
+        const user = firebase.auth().currentUser;
         setUser(user);
         console.log(`user`, user);
         addDocFavorite(user);

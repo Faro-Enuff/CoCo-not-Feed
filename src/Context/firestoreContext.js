@@ -20,26 +20,29 @@ export const FirestoreContextProvider = ({ children }) => {
   ////////////////////////////////////////////////////////////////////////////
   const addNewFavorite = (title, image, id) => {
     if (user) {
-      const userRef = db.collection("faves").doc(user.uid);
+      const userRef = db.collection("users").doc(user.uid);
 
-      userRef.update({
-        recipes: firebase.firestore.FieldValue.arrayUnion({
-          title,
-          image,
-          id,
-        }),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      userRef.set(
+        {
+          favoriteRecipes: firebase.firestore.FieldValue.arrayUnion({
+            title,
+            image,
+            id,
+            timestamp: new Date(),
+          }),
+        },
+        { merge: true }
+      );
     } else {
       history.push("/signup");
     }
   };
 
   const deleteFavorite = (title, image, id) => {
-    const userRef = db.collection("faves").doc(user.uid);
+    const userRef = db.collection("users").doc(user.uid);
 
     userRef.update({
-      recipes: firebase.firestore.FieldValue.arrayRemove({
+      favoriteRecipes: firebase.firestore.FieldValue.arrayRemove({
         title,
         image,
         id,
@@ -48,14 +51,14 @@ export const FirestoreContextProvider = ({ children }) => {
   };
 
   const getFavorites = () => {
-    const docRef = db.collection("faves").doc(user?.uid);
+    const docRef = db.collection("users").doc(user?.uid);
 
     docRef
       .get()
       .then((doc) => {
         if (doc.exists) {
           console.log("Document data:", doc.data());
-          setFavorites(doc.data().recipes);
+          setFavorites(doc.data().favoriteRecipes);
           // console.log(favorites);
         } else {
           // doc.data() will be undefined in this case
@@ -71,47 +74,18 @@ export const FirestoreContextProvider = ({ children }) => {
   // Counting Likes Functionalities
   ////////////////////////////////////////////////////////////////////////////
 
-  //If it is the first like of a recipe (gets called by main function GETLIKES)
-  const addDocLike = (recipeId, recipeTitle) => {
-    db.collection("likes")
-      .doc(recipeId)
-      .set({
-        title: recipeTitle,
-        likes: [user.uid],
-      })
-      .then((docRef) => {
-        console.log("Document successfully written!");
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
-  };
-
-  // Main Function -> proves if doc already exists?
-  //(Y) => update like doc with the User ID -> array doc.length + 1 //
-  //(N) => call addDocLike
-  const getLikes = (recipeId, recipeTitle) => {
+  const setCommunityLikes = (recipeId, recipeTitle) => {
     if (user) {
-      const docRef = db.collection("likes").doc(recipeId);
+      const docRef = db.collection("recipes").doc(recipeId);
 
       docRef
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            console.log("Document data:", doc.data());
-            //Update Likes Array
-            docRef.update({
-              likes: firebase.firestore.FieldValue.arrayUnion(user.uid),
-            });
-            //Set Likes state with total amount
-            // setLikes(docRef.data().likes.length);
-            // console.log(favorites);
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-            addDocLike(recipeId, recipeTitle);
-          }
-        })
+        .set(
+          {
+            title: recipeTitle,
+            likes: firebase.firestore.FieldValue.arrayUnion(user.uid),
+          },
+          { merge: true }
+        )
         .catch((error) => {
           console.log("Error getting document:", error);
         });
@@ -119,7 +93,7 @@ export const FirestoreContextProvider = ({ children }) => {
   };
   // Method to include
   const allocateLikes = (currentRecipes) => {
-    db.collection("likes")
+    db.collection("recipes")
       .get()
       .then((querySnapshot) => {
         const likeArray = [];
@@ -141,7 +115,7 @@ export const FirestoreContextProvider = ({ children }) => {
         getFavorites,
         favorites,
         likes,
-        getLikes,
+        setCommunityLikes,
         allocateLikes,
       }}
     >

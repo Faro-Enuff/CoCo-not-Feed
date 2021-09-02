@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { apiKey } from "../utils/apiKey";
 import fetchFunction from "../utils/fetchFunction";
 import { FirestoreContext } from "../Context/firestoreContext";
+import { CommentContext } from "../Context/commentContext";
 import RecipeIngredients from "../Components/detailed/RecipeIngredients";
 import RecipeMacros from "../Components/detailed/RecipeMacros";
 import RecipeMicros from "../Components/detailed/RecipeMicros";
 import RecipeWinePairing from "../Components/detailed/RecipeWinePairing";
 import RecipeInstructions from "../Components/detailed/RecipeInstructions";
+import CommentDialog from "../Components/comment/CommentDialog";
 /////
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
@@ -23,8 +25,8 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import CommentIcon from "@material-ui/icons/Comment";
 
 const useStyles = makeStyles((muiTheme) => ({
   detailedPage: {
@@ -62,7 +64,8 @@ const useStyles = makeStyles((muiTheme) => ({
 const DetailedRecipe = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const { addNewFavorite, deleteFavorite, favorites, getLikes } =
+  let history = useHistory();
+  const { addNewFavorite, deleteFavorite, favorites, setCommunityLikes } =
     useContext(FirestoreContext);
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [isPending, setIsPending] = useState(true);
@@ -109,7 +112,7 @@ const DetailedRecipe = () => {
       );
       setColorIcon(true);
     }
-    getLikes(id, recipeDetails.title);
+    setCommunityLikes(id, recipeDetails.title);
   };
   // console.log(recipeDetails);
   return (
@@ -161,9 +164,10 @@ const DetailedRecipe = () => {
                       <FavoriteIcon />
                     )}
                   </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
+                  <CommentDialog
+                    recipeTitle={recipeDetails.title}
+                    recipeId={recipeDetails.id}
+                  />
                   <IconButton
                     className={clsx(classes.expand, {
                       [classes.expandOpen]: expanded,

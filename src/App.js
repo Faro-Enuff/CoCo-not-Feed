@@ -1,11 +1,18 @@
 import Home from "./ScreenView/Home";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
 import DetailedRecipe from "./ScreenView/DetailedRecipe";
 import Profile from "./ScreenView/Profile";
 import Definitions from "./ScreenView/Definitions";
 import { FormContextProvider } from "./Context/FormContext";
 import { AuthContextProvider } from "./Context/authContext";
 import { FirestoreContextProvider } from "./Context/firestoreContext";
+import { CommentContextProvider } from "./Context/commentContext";
 import { ThemeProvider } from "./Context/themeContext";
 import PaginationRecipes from "./ScreenView/PaginationRecipes";
 import SignUp from "./Components/auth/SignUp";
@@ -28,31 +35,43 @@ const useStyles = makeStyles((muiTheme) => ({
 
 function App() {
   const classes = useStyles();
+
   return (
     <Router>
       <ThemeProvider>
         <AuthContextProvider>
           <FirestoreContextProvider>
-            <FormContextProvider>
-              <div className="App">
-                <div className={classes.content}>
-                  <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route
-                      path="/recipes"
-                      exact
-                      component={PaginationRecipes}
-                    />
-                    <Route path="/recipe/:id" component={DetailedRecipe} />
-                    <Route path="/profile" exact component={Profile} />
-                    <Route path="/definitions" exact component={Definitions} />
-                    <Route path="/signup" exact component={SignUp} />
-                    <Route path="/signin" exact component={SignIn} />
-                  </Switch>
+            <CommentContextProvider>
+              <FormContextProvider>
+                <div className="App">
+                  <Route
+                    exact
+                    path={["/", "/profile", "/recipes", "/recipe/:id"]}
+                  >
+                    <BottomNavigationCustom />
+                  </Route>
+                  <div className={classes.content}>
+                    <Switch>
+                      <Route path="/" exact component={Home} />
+                      <Route
+                        path="/recipes"
+                        exact
+                        component={PaginationRecipes}
+                      />
+                      <Route path="/recipe/:id" component={DetailedRecipe} />
+                      <Route path="/profile" exact component={Profile} />
+                      <Route
+                        path="/definitions"
+                        exact
+                        component={Definitions}
+                      />
+                      <Route path="/signup" exact component={SignUp} />
+                      <Route path="/signin" exact component={SignIn} />
+                    </Switch>
+                  </div>
                 </div>
-                <BottomNavigationCustom />
-              </div>
-            </FormContextProvider>
+              </FormContextProvider>
+            </CommentContextProvider>
           </FirestoreContextProvider>
         </AuthContextProvider>
       </ThemeProvider>

@@ -11,8 +11,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import CommentIcon from "@material-ui/icons/Comment";
-import { IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -85,9 +83,6 @@ const RecipeList = ({ currentRecipes }) => {
                             <p>{selectedLikes.likes.length}</p>
                           ))}
                       </Button>
-                      <IconButton size="small" color="secondary">
-                        <CommentIcon fontSize="small" />
-                      </IconButton>
                     </div>
                   </CardActions>
                 </Card>
