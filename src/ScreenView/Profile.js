@@ -30,10 +30,10 @@ const Profile = () => {
   let history = useHistory();
   const classes = useStyles();
   const { user, signOut } = useContext(AuthContext);
-  const { getFavorites, favorites } = useContext(FirestoreContext);
+  const { allocateFavorites, favorites } = useContext(FirestoreContext);
 
   useEffect(() => {
-    getFavorites();
+    allocateFavorites();
   }, []);
 
   const onClickSignOut = () => {

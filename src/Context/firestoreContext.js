@@ -24,17 +24,17 @@ export const FirestoreContextProvider = ({ children }) => {
 
       userRef.set(
         {
+          name: user.displayName,
           favoriteRecipes: firebase.firestore.FieldValue.arrayUnion({
             title,
             image,
             id,
-            timestamp: new Date(),
           }),
         },
         { merge: true }
       );
     } else {
-      history.push("/signup");
+      history.push("/signin");
     }
   };
 
@@ -42,6 +42,7 @@ export const FirestoreContextProvider = ({ children }) => {
     const userRef = db.collection("users").doc(user.uid);
 
     userRef.update({
+      name: user.displayName,
       favoriteRecipes: firebase.firestore.FieldValue.arrayRemove({
         title,
         image,
@@ -50,25 +51,34 @@ export const FirestoreContextProvider = ({ children }) => {
     });
   };
 
-  const getFavorites = () => {
-    const docRef = db.collection("users").doc(user?.uid);
-
-    docRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log("Document data:", doc.data());
-          setFavorites(doc.data().favoriteRecipes);
-          // console.log(favorites);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
+  const allocateFavorites = () => {
+    db.collection("users")
+      .doc(user?.uid)
+      .onSnapshot((doc) => {
+        console.log("Current data: ", doc.data());
+        setFavorites(doc.data().favoriteRecipes);
       });
   };
+
+  // const getFavorites = () => {
+  //   const docRef = db.collection("users").doc(user?.uid);
+
+  //   docRef
+  //     .get()
+  //     .then((doc) => {
+  //       if (doc.exists) {
+  //         console.log("Document data:", doc.data());
+  //         setFavorites(doc.data().favoriteRecipes);
+  //         // console.log(favorites);
+  //       } else {
+  //         // doc.data() will be undefined in this case
+  //         console.log("No such document!");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting document:", error);
+  //     });
+  // };
 
   ////////////////////////////////////////////////////////////////////////////
   // Counting Likes Functionalities
@@ -89,8 +99,19 @@ export const FirestoreContextProvider = ({ children }) => {
         .catch((error) => {
           console.log("Error getting document:", error);
         });
+    } else {
+      history.push("/signin");
     }
   };
+  const deleteLikes = (recipeId, recipeTitle) => {
+    const userRef = db.collection("recipes").doc(recipeId);
+
+    userRef.update({
+      title: recipeTitle,
+      likes: firebase.firestore.FieldValue.arrayRemove(user.uid),
+    });
+  };
+
   // Method to include
   const allocateLikes = (currentRecipes) => {
     db.collection("recipes")
@@ -112,11 +133,12 @@ export const FirestoreContextProvider = ({ children }) => {
       value={{
         addNewFavorite,
         deleteFavorite,
-        getFavorites,
+        allocateFavorites,
         favorites,
         likes,
         setCommunityLikes,
         allocateLikes,
+        deleteLikes,
       }}
     >
       {children}

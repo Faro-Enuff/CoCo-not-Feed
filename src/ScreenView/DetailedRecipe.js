@@ -65,8 +65,13 @@ const DetailedRecipe = () => {
   const classes = useStyles();
   const { id } = useParams();
   let history = useHistory();
-  const { addNewFavorite, deleteFavorite, favorites, setCommunityLikes } =
-    useContext(FirestoreContext);
+  const {
+    addNewFavorite,
+    deleteFavorite,
+    favorites,
+    setCommunityLikes,
+    deleteLikes,
+  } = useContext(FirestoreContext);
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [expanded, setExpanded] = useState(false);
@@ -86,7 +91,9 @@ const DetailedRecipe = () => {
   useEffect(() => {
     if (favorites.filter((e) => e.id == id).length > 0) {
       console.log("Yuhu");
-      setColorIcon(!colorIcon);
+      setColorIcon(true);
+    } else {
+      setColorIcon(false);
     }
   }, []);
 
@@ -103,6 +110,8 @@ const DetailedRecipe = () => {
         recipeDetails.image,
         recipeDetails.id
       );
+      deleteLikes(id, recipeDetails.title);
+      console.log("Hihi");
       setColorIcon(false);
     } else {
       addNewFavorite(
@@ -110,9 +119,9 @@ const DetailedRecipe = () => {
         recipeDetails.image,
         recipeDetails.id
       );
+      setCommunityLikes(id, recipeDetails.title);
       setColorIcon(true);
     }
-    setCommunityLikes(id, recipeDetails.title);
   };
   // console.log(recipeDetails);
   return (

@@ -80,7 +80,7 @@ const RecipeList = ({ currentRecipes }) => {
                         {likes
                           ?.filter((e) => e.title === recipe.title)
                           .map((selectedLikes) => (
-                            <p>{selectedLikes.likes.length}</p>
+                            <p>{selectedLikes?.likes?.length}</p>
                           ))}
                       </Button>
                     </div>

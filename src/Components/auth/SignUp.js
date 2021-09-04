@@ -67,7 +67,7 @@ const SignUp = () => {
     signUp(profile);
     history.push("/");
   };
-  console.log(profile);
+  // console.log(profile);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

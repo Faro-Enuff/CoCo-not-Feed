@@ -47,6 +47,8 @@ const CommentDialog = ({ recipeTitle, recipeId }) => {
     setOpen(false);
   };
   console.log(recipeTitle, recipeId);
+  console.log("Wurst");
+
   return (
     <div className={classes.dialog}>
       <IconButton color="primary" variant="outlined" onClick={handleClickOpen}>
@@ -68,7 +70,7 @@ const CommentDialog = ({ recipeTitle, recipeId }) => {
         >
           <CloseIcon />
         </IconButton>
-        <DialogTitle id="form-dialog-title">Comments</DialogTitle>
+        <DialogTitle id="form-dialog-title">{recipeTitle}</DialogTitle>
         <DialogContent>
           {/* <DialogContentText style={{ color: "#fff" }}>
             Please Select your current diet.

@@ -8,11 +8,11 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState("Not logged in");
   // Create the first Data base
   const addDocFavorite = (user) => {
-    db.collection("faves")
-      .doc(user.uid)
+    db.collection("users")
+      .doc(user?.uid)
       .set({
-        recipes: [],
-        timestamp: firebaseapp.firestore.FieldValue.serverTimestamp(),
+        name: user.displayName,
+        favoriteRecipes: [],
       })
       .then((docRef) => {
         console.log("Document successfully written!");
