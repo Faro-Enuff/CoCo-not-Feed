@@ -52,12 +52,14 @@ export const FirestoreContextProvider = ({ children }) => {
   };
 
   const allocateFavorites = () => {
-    db.collection("users")
-      .doc(user?.uid)
-      .onSnapshot((doc) => {
-        console.log("Current data: ", doc.data());
-        setFavorites(doc.data().favoriteRecipes);
-      });
+    if (user) {
+      db.collection("users")
+        .doc(user?.uid)
+        .onSnapshot((doc) => {
+          console.log("Current data: ", doc?.data());
+          setFavorites(doc?.data().favoriteRecipes);
+        });
+    }
   };
 
   // const getFavorites = () => {

@@ -45,6 +45,11 @@ const useStyles = makeStyles((muiTheme) => ({
   submit: {
     margin: muiTheme.spacing(3, 0, 2),
   },
+  googleAuth: {
+    fontSize: 16,
+    cursor: "pointer",
+    color: muiTheme.palette.primary.dark,
+  },
 }));
 
 const SignIn = () => {
@@ -63,12 +68,13 @@ const SignIn = () => {
   };
   const handleGoogleLink = () => {
     signInWithGooglePopUp();
-    history.push("/");
+    history.goBack();
   };
   const handleOnSubmit = (event) => {
     event.preventDefault();
     signIn(profile);
-    history.push("/");
+    history.goBack();
+    history.goBack();
   };
   // console.log(profile);
   return (
@@ -109,7 +115,12 @@ const SignIn = () => {
             value={profile.password}
           />
           <Grid item xs>
-            <Link variant="body2" color="secondary" onClick={handleGoogleLink}>
+            <Link
+              variant="body2"
+              color="secondary"
+              onClick={handleGoogleLink}
+              className={classes.googleAuth}
+            >
               <b>Or, sign in with your Google Account.</b>
             </Link>
           </Grid>

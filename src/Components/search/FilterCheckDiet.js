@@ -22,6 +22,7 @@ const FilterCheckDiet = () => {
       [event.target.name]: event.target.checked,
     });
   };
+  console.log(checkBoxDiet);
 
   const { Vegan, Vegetarian, Pescetarian, Paleo } = checkBoxDiet;
 

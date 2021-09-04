@@ -36,19 +36,23 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const DialogRadio = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  //Small hack to change button color (preSelected value = popularity, so cant check search for it)
+  const [color, setColor] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setColor(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div className={classes.dialog}>
       <Button
         variant="outlined"
-        color="secondary"
+        color={color ? "primary" : "secondary"}
         onClick={handleClickOpen}
         size="large"
         className={classes.btn}

@@ -40,9 +40,15 @@ const BottomNavigationCustom = () => {
 
   const goBack = () => {
     history.goBack();
+    setTimeout(() => {
+      setValue("recents");
+    }, 1500);
   };
   const goPage = (page) => {
     history.push(page);
+    setTimeout(() => {
+      setValue("recents");
+    }, 1500);
   };
   console.log(`user`, user?.uid);
   return (

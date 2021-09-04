@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchBarInput = ({ handleFetchList }) => {
+const SearchBarInput = ({ handleKeyEnter }) => {
   const classes = useStyles();
   const { search, setSearch } = useContext(FormContext);
 
@@ -57,6 +57,7 @@ const SearchBarInput = ({ handleFetchList }) => {
           id="searchRecipe"
           label="Enter 3 ingredients (cheese, onion..)"
           onChange={handleSearch}
+          onKeyUp={handleKeyEnter}
           name="searchTerm"
           value={search.searchTerm}
           variant="outlined"

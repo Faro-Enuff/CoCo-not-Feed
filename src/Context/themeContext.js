@@ -32,9 +32,9 @@ export const ThemeProvider = ({ children }) => {
         default: "#efebe9",
       },
       primary: {
-        light: "#e8f5e9",
-        main: "#c8e6c9",
-        dark: "#a5d6a7",
+        light: "#c8e6c9",
+        main: "#a5d6a7",
+        dark: "#81c784",
         contrastText: "#fff",
       },
       secondary: {

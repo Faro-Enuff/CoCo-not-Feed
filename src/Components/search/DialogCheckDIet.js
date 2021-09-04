@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,6 +7,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import FilterCheckDiet from "./FilterCheckDiet";
+import { FormContext } from "../../Context/FormContext";
 
 const useStyles = makeStyles((muiTheme) => ({
   btn: {
@@ -36,8 +37,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const DialogCheckDiet = () => {
   const classes = useStyles();
+  const { search } = useContext(FormContext);
   const [open, setOpen] = useState(false);
-
+  console.log(search.diet);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -49,7 +51,7 @@ const DialogCheckDiet = () => {
     <div className={classes.dialog}>
       <Button
         variant="outlined"
-        color="secondary"
+        color={search.diet ? "primary" : "secondary"}
         onClick={handleClickOpen}
         size="large"
         className={classes.btn}

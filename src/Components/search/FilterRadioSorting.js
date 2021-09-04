@@ -49,12 +49,6 @@ const FilterRadioSorting = () => {
           labelPlacement="bottom"
         />
         <FormControlLabel
-          value="healthiness"
-          control={<Radio color="primary" />}
-          label="Healthiness"
-          labelPlacement="bottom"
-        />
-        <FormControlLabel
           value="calories"
           control={<Radio color="primary" />}
           label="Calories"

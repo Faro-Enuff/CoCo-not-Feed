@@ -44,13 +44,22 @@ const useStyles = makeStyles((muiTheme) => ({
 
 const FormCon = ({ handleFetchList }) => {
   const classes = useStyles();
-
+  // useState from Context, which carries all the relevant search fields for the API search
   const { search } = useContext(FormContext);
 
-  const handlerButton = () => {
+  // Button & Enter to initialize the fetch with all search parameters
+  const handleButtonClick = () => {
     handleFetchList(search);
   };
-  console.log(search);
+  const handleKeyEnter = (e) => {
+    if (e.key === "Enter") {
+      handleFetchList(search);
+    }
+  };
+
+  // Display the search Parameters in the console
+  console.log(`search Parameters :>>`, search);
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -78,8 +87,9 @@ const FormCon = ({ handleFetchList }) => {
                   />
                 </div>
               </div>
-
-              <SearchBarInput />
+              {/*  */}
+              {/* All Dialogs for Checkbox and Radios */}
+              <SearchBarInput handleKeyEnter={handleKeyEnter} />
               <DialogCheckDiet />
               <DialogCheckIntolerances />
               <DialogRadio />
@@ -90,7 +100,7 @@ const FormCon = ({ handleFetchList }) => {
                   type="submit"
                   variant="contained"
                   color="secondary"
-                  onClick={handlerButton}
+                  onClick={handleButtonClick}
                   className={classes.btn}
                   size="large"
                 >
