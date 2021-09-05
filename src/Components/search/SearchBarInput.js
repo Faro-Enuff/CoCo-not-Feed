@@ -61,7 +61,7 @@ const SearchBarInput = ({ handleKeyEnter }) => {
           name="searchTerm"
           value={search.searchTerm}
           variant="outlined"
-          color="secondary"
+          color={search.searchTerm ? "primary" : "secondary"}
           fullWidth
           required
         />

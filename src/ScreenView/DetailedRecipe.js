@@ -1,29 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
+
+// React router dom
 import { useParams, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+
+// Intern Component Imports
 import { apiKey } from "../utils/apiKey";
 import fetchFunction from "../utils/fetchFunction";
 import { FirestoreContext } from "../Context/firestoreContext";
-import { CommentContext } from "../Context/commentContext";
 import RecipeIngredients from "../Components/detailed/RecipeIngredients";
 import RecipeMacros from "../Components/detailed/RecipeMacros";
 import RecipeMicros from "../Components/detailed/RecipeMicros";
 import RecipeWinePairing from "../Components/detailed/RecipeWinePairing";
 import RecipeInstructions from "../Components/detailed/RecipeInstructions";
 import CommentDialog from "../Components/comment/CommentDialog";
-/////
-import Grid from "@material-ui/core/Grid";
-import { Container } from "@material-ui/core";
+
+import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
+
+import {
+  Grid,
+  Container,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  Typography,
+} from "@material-ui/core";
+
+// Icons Import
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CommentIcon from "@material-ui/icons/Comment";
@@ -63,22 +71,16 @@ const useStyles = makeStyles((muiTheme) => ({
 
 const DetailedRecipe = () => {
   const classes = useStyles();
+
+  // React Router Dom -> get the id by using URL
   const { id } = useParams();
+
   let history = useHistory();
-  const {
-    addNewFavorite,
-    deleteFavorite,
-    favorites,
-    setCommunityLikes,
-    deleteLikes,
-  } = useContext(FirestoreContext);
+
+  // Use the id from the URL to fire the second fetch of this application => Receiving Details of a Recipe
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [isPending, setIsPending] = useState(true);
-  const [expanded, setExpanded] = useState(false);
-  const [colorIcon, setColorIcon] = useState(false);
 
-  ///////////////////////////////////////////////////////
-  //Fetch
   useEffect(() => {
     fetchFunction(
       `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${apiKey}`,
@@ -87,19 +89,31 @@ const DetailedRecipe = () => {
     );
   }, [id]);
 
-  ///////////
+  // Use state for UI feature, color => for icon
+  const [colorIcon, setColorIcon] = useState(false);
   useEffect(() => {
     if (favorites.filter((e) => e.id == id).length > 0) {
-      console.log("Yuhu");
+      // console.log("Yuhu");
       setColorIcon(true);
     } else {
       setColorIcon(false);
     }
   }, []);
 
+  // Use state for UI feature, expand => for showing instructions
+  const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  // Access to Firestore Context functions and useState for handling Recipe Favorites / Likes
+  const {
+    addNewFavorite,
+    deleteFavorite,
+    favorites,
+    setCommunityLikes,
+    deleteLikes,
+  } = useContext(FirestoreContext);
 
   const handleFavoriteClick = () => {
     // console.log(id);
@@ -111,7 +125,6 @@ const DetailedRecipe = () => {
         recipeDetails.id
       );
       deleteLikes(id, recipeDetails.title);
-      console.log("Hihi");
       setColorIcon(false);
     } else {
       addNewFavorite(
@@ -123,11 +136,16 @@ const DetailedRecipe = () => {
       setColorIcon(true);
     }
   };
+
   // console.log(recipeDetails);
+
   return (
     <Container component="main" maxWidth="xs" className={classes.detailedPage}>
       <div>
+        {/* Loader */}
         {isPending && <div>Loading...</div>}
+
+        {/* Recipe Card */}
         {recipeDetails && (
           <Grid container>
             <Grid item xs={12}>

@@ -11,6 +11,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { keys } from "@material-ui/core/styles/createBreakpoints";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const RecipeList = ({ currentRecipes }) => {
   const { likes, allocateLikes } = useContext(FirestoreContext);
   const classes = useStyles();
-  console.log(currentRecipes);
+  // console.log(currentRecipes);
   useEffect(() => {
     allocateLikes(currentRecipes);
   }, [currentRecipes]);
@@ -79,8 +80,8 @@ const RecipeList = ({ currentRecipes }) => {
                       >
                         {likes
                           ?.filter((e) => e.title === recipe.title)
-                          .map((selectedLikes) => (
-                            <p>{selectedLikes?.likes?.length}</p>
+                          .map((selectedLikes, key) => (
+                            <p key={key}>{selectedLikes?.likes?.length}</p>
                           ))}
                       </Button>
                     </div>

@@ -57,7 +57,7 @@ export const FirestoreContextProvider = ({ children }) => {
         .doc(user?.uid)
         .onSnapshot((doc) => {
           console.log("Current data: ", doc?.data());
-          setFavorites(doc?.data().favoriteRecipes);
+          setFavorites(doc.data()?.favoriteRecipes);
         });
     }
   };

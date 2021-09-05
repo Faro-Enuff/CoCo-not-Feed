@@ -13,8 +13,6 @@ const Home = () => {
   // const [error, setError] = useState(null);
 
   const handleFetchList = (search) => {
-    console.log("WHY");
-
     const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&includeIngredients=${
       search.searchTerm
     }&diet=${search.diet}&intolerances=${

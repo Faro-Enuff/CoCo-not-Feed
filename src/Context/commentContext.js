@@ -21,6 +21,7 @@ export const CommentContextProvider = ({ children }) => {
           {
             title: recipeTitle,
             comments: firebase.firestore.FieldValue.arrayUnion({
+              title: recipeTitle,
               name: user.displayName,
               text: commentText,
               timestamp: new Date().toString(),
@@ -41,8 +42,8 @@ export const CommentContextProvider = ({ children }) => {
     db.collection("recipes")
       .doc(recipeId.toString())
       .onSnapshot((doc) => {
-        console.log("Current data: ", doc.data());
-        setCommentCollection(doc.data().comments);
+        console.log("Current data: ", doc?.data());
+        setCommentCollection(doc.data()?.comments);
       });
   };
 

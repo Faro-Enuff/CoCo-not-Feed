@@ -1,17 +1,25 @@
 import React, { useContext, useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { AuthContext } from "../../Context/authContext";
+// React Router Dom
 import { useHistory } from "react-router-dom";
+// Internal Imports
+import { AuthContext } from "../../Context/authContext";
+// Icons
+import CloseIcon from "@material-ui/icons/Close";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+// Core Imports
+import {
+  Container,
+  Typography,
+  Avatar,
+  Button,
+  IconButton,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+} from "@material-ui/core";
 
 function Copyright() {
   return (
@@ -27,6 +35,10 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((muiTheme) => ({
+  closeIcon: {
+    display: "flex",
+    justifyContent: "right",
+  },
   paper: {
     marginTop: muiTheme.spacing(8),
     display: "flex",
@@ -56,30 +68,51 @@ const SignIn = () => {
   let history = useHistory();
   const classes = useStyles();
 
+  // Functionality to go Back to the previous window, in case you do not want to sign in
+  const handleClose = () => {
+    history.goBack();
+  };
+  // UseState for the profile relevant login data
   const [profile, setProfile] = useState({
     email: "",
     password: "",
   });
-
+  // AuthContext -> Ways to sign in, via Google function or via simple email & password function
   const { signIn, signInWithGooglePopUp } = useContext(AuthContext);
 
+  // Simple way to update the useState ot the sign in person (dependant on the input field)
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
+
+  // Click Event => Google auth. function to sign in
   const handleGoogleLink = () => {
     signInWithGooglePopUp();
     history.goBack();
   };
+
+  // Submit (click&enter) => Email and password function to sign in
   const handleOnSubmit = (event) => {
     event.preventDefault();
     signIn(profile);
-    history.goBack();
+    //apparently we need 2 goBack functions to be on the prev. page
     history.goBack();
   };
+
   // console.log(profile);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <div className={classes.closeIcon}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleClose}
+          aria-label="close"
+        >
+          <CloseIcon />
+        </IconButton>
+      </div>
       <div className={classes.paper}>
         <Avatar className={classes.avatar} color="secondary">
           <LockOutlinedIcon />

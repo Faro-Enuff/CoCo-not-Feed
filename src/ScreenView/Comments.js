@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     margin: "5%",
   },
-  order: {
+  commentOrder: {
     display: "flex",
     overflow: "hidden",
     flexDirection: "row",
@@ -79,8 +79,8 @@ const Comments = ({ recipeTitle, recipeId }) => {
     <div className={classes.flexContainer}>
       <Typography variant="h5">Comments</Typography>
       <div className={classes.commentsContainer}>
-        {commentCollection?.map((comment) => (
-          <div className={classes.order}>
+        {commentCollection?.map((comment, key) => (
+          <div className={classes.commentOrder} key={key}>
             <div className={classes.userAvatar}>
               <Avatar></Avatar>
             </div>
@@ -89,7 +89,7 @@ const Comments = ({ recipeTitle, recipeId }) => {
                 <div className={classes.commentElements}>
                   <div>
                     <Typography variant="h6">{comment.name}</Typography>
-                    <Typography variant="body3">
+                    <Typography variant="body2">
                       {moment(comment.timestamp.toString()).fromNow()}
                     </Typography>
                   </div>

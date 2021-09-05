@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+// Internal Imports
+import Comments from "../../ScreenView/Comments";
+import { CommentContext } from "../../Context/commentContext";
+// Icons
 import CommentIcon from "@material-ui/icons/Comment";
 import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import Comments from "../../ScreenView/Comments";
+// Core Imports
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Slide,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((muiTheme) => ({
   btn: {
@@ -37,7 +42,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CommentDialog = ({ recipeTitle, recipeId }) => {
   const classes = useStyles();
+
   const [open, setOpen] = useState(false);
+
+  const { commentCollection } = useContext(CommentContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,13 +54,15 @@ const CommentDialog = ({ recipeTitle, recipeId }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(recipeTitle, recipeId);
-  console.log("Wurst");
 
   return (
     <div className={classes.dialog}>
-      <IconButton color="primary" variant="outlined" onClick={handleClickOpen}>
-        <CommentIcon />
+      <IconButton variant="outlined" onClick={handleClickOpen}>
+        {commentCollection && commentCollection[0].title === recipeTitle ? (
+          <CommentIcon color="primary" />
+        ) : (
+          <CommentIcon />
+        )}
       </IconButton>
       <Dialog
         open={open}

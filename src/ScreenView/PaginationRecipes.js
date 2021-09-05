@@ -1,13 +1,17 @@
 import React from "react";
 import { useState, useContext, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import RecipeList from "../Components/RecipeList";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+// Internal Import
 import { FormContext } from "../Context/FormContext";
+import RecipeList from "../Components/RecipeList";
+// Core Import
+import { Container, Button, Typography, Grid } from "@material-ui/core";
 
+// Styling
 const useStyles = makeStyles((muiTheme) => ({
+  header: {
+    marginTop: "10%",
+  },
   recipePreview: {
     display: "flex",
     flexDirection: "column",
@@ -33,36 +37,56 @@ const useStyles = makeStyles((muiTheme) => ({
   },
 }));
 
+// Component
+
 const PaginationRecipes = () => {
   const classes = useStyles();
+
+  // Context delivers Array of recipes, in correlation to search parameters
   const { recipePreview, isPending } = useContext(FormContext);
+
+  // useStates for the "self made" Pagination Feature
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage, setRecipesPerPage] = useState(5);
   const [pageNumbers, setPageNumbers] = useState([]);
 
+  // variables for the "self made" Pagination Feature
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = recipePreview.slice(
     indexOfFirstRecipe,
     indexOfLastRecipe
   );
-  useEffect(() => {
-    for (
-      let i = 1;
-      i <= Math.ceil(recipePreview.length / recipesPerPage);
-      i++
-    ) {
-      pageNumbers.push(i);
-    }
-  }, []);
 
-  const paginate = (pageNumber) => {
+  // Calculation of pages using useEffect (always fires, when recipePreview changes, ? gets bigger or smaller)
+
+  const newArray = (size) => {
+    let array = [];
+    for (let i = 1; i <= size; i++) {
+      array[i] = i;
+    }
+    return array;
+  };
+  // console.log(Math.ceil(recipePreview?.length / recipesPerPage));
+
+  useEffect(() => {
+    console.log(recipePreview);
+    setPageNumbers(newArray(Math.ceil(recipePreview?.length / recipesPerPage)));
+  }, [recipePreview]);
+
+  // console.log(pageNumbers);
+
+  // Responsible for changing the current page & by this changing the content
+  const onClickHandler = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0);
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <div className={classes.header}>
+        <Typography variant="h4">Results</Typography>
+      </div>
       <div className={classes.recipePreview}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -85,7 +109,7 @@ const PaginationRecipes = () => {
                         variant="contained"
                         className={classes.btn}
                       >
-                        <a onClick={() => paginate(number)}>{number}</a>
+                        <a onClick={() => onClickHandler(number)}>{number}</a>
                       </Button>
                     </li>
                   ))}
