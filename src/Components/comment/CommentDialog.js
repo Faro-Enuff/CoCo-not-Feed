@@ -8,6 +8,7 @@ import CommentIcon from "@material-ui/icons/Comment";
 import CloseIcon from "@material-ui/icons/Close";
 // Core Imports
 import {
+  Typography,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -16,6 +17,12 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles((muiTheme) => ({
+  heading: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "5%",
+  },
   btn: {
     borderWidth: 3,
   },
@@ -80,7 +87,12 @@ const CommentDialog = ({ recipeTitle, recipeId }) => {
         >
           <CloseIcon />
         </IconButton>
-        <DialogTitle id="form-dialog-title">{recipeTitle}</DialogTitle>
+        <div className={classes.heading}>
+          <Typography variant="h4" style={{ paddingBottom: "3%" }}>
+            Comments
+          </Typography>
+          <Typography variant="h5">{recipeTitle}</Typography>
+        </div>
         <DialogContent>
           {/* <DialogContentText style={{ color: "#fff" }}>
             Please Select your current diet.

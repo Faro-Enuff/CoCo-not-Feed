@@ -45,7 +45,7 @@ const RecipeList = ({ currentRecipes }) => {
   // console.log(likes);
   return (
     <div className="recipeImportant">
-      {currentRecipes.map((recipe, key) => (
+      {currentRecipes?.map((recipe, key) => (
         <div className="recipes" key={recipe.id}>
           <Link to={`/recipe/${recipe.id}`}>
             <Grid container className={classes.grid}>

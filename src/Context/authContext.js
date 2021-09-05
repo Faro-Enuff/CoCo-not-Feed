@@ -6,12 +6,17 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState("Not logged in");
-  // Create the first Data base
-  const addDocFavorite = (user) => {
+
+  ////////////////////////////////////////////////////////////////////////////
+  // Function to create userData -> doc gets named by user.uid
+  ////////////////////////////////////////////////////////////////////////////
+
+  const addDocUserData = (user) => {
     db.collection("users")
       .doc(user?.uid)
       .set({
-        name: user.displayName,
+        name: user?.displayName,
+        avatar: "",
         favoriteRecipes: [],
       })
       .then((docRef) => {
@@ -21,9 +26,11 @@ export const AuthContextProvider = ({ children }) => {
         console.error("Error adding document: ", error);
       });
   };
+  ////////////////////////////////////////////////////////////////////////////
+  //Auth State Observer
+  ////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
-    //Auth State Observer
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -37,6 +44,10 @@ export const AuthContextProvider = ({ children }) => {
       }
     });
   }, []);
+
+  ////////////////////////////////////////////////////////////////////////////
+  // Sign Up with Google Auth
+  ////////////////////////////////////////////////////////////////////////////
 
   const signInWithGooglePopUp = () => {
     firebase
@@ -61,6 +72,9 @@ export const AuthContextProvider = ({ children }) => {
         );
       });
   };
+  ////////////////////////////////////////////////////////////////////////////
+  // SignUp with Email and Password
+  ////////////////////////////////////////////////////////////////////////////
 
   const signUp = ({ email, password, name }) => {
     firebase
@@ -76,7 +90,8 @@ export const AuthContextProvider = ({ children }) => {
         const user = firebase.auth().currentUser;
         setUser(user);
         console.log(`user`, user);
-        addDocFavorite(user);
+        console.log(`user.displayName`, user.displayName);
+        addDocUserData(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -85,6 +100,11 @@ export const AuthContextProvider = ({ children }) => {
         console.log(`errorCode`, errorCode);
       });
   };
+
+  ////////////////////////////////////////////////////////////////////////////
+  // SignIn Function
+  ////////////////////////////////////////////////////////////////////////////
+
   const signIn = ({ email, password }) => {
     firebase
       .auth()
@@ -103,6 +123,10 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
+  ////////////////////////////////////////////////////////////////////////////
+  // SignOut Function
+  ////////////////////////////////////////////////////////////////////////////
+
   const signOut = () => {
     firebase
       .auth()
@@ -114,6 +138,8 @@ export const AuthContextProvider = ({ children }) => {
         console.log(`Error Signing out`, error);
       });
   };
+
+  // Return the Provider for the Router
   return (
     <AuthContext.Provider
       value={{ user, signUp, signIn, signOut, signInWithGooglePopUp }}

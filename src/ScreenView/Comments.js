@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     left: 0,
     overflow: "hidden",
-    height: "65%",
+    height: "60%",
     bottom: "15%",
     width: "100%",
     overflowY: "auto",
@@ -77,7 +77,6 @@ const Comments = ({ recipeTitle, recipeId }) => {
 
   return (
     <div className={classes.flexContainer}>
-      <Typography variant="h5">Comments</Typography>
       <div className={classes.commentsContainer}>
         {commentCollection?.map((comment, key) => (
           <div className={classes.commentOrder} key={key}>

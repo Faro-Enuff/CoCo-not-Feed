@@ -12,12 +12,32 @@ export const FirestoreContextProvider = ({ children }) => {
   // const [recipes] = useCollectionData(query, { idField: "id" });
   let history = useHistory();
   const { user } = useContext(AuthContext);
-  const [favorites, setFavorites] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [likes, setLikes] = useState([]);
 
   ////////////////////////////////////////////////////////////////////////////
-  // Favorite Functionalities
+  // Update user Data
   ////////////////////////////////////////////////////////////////////////////
+
+  const updateUserData = (updateData) => {
+    db.collection("users")
+      .doc(user.uid)
+      .set({
+        ...updateData,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+        setUserData({ ...updateData });
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  ////////////////////////////////////////////////////////////////////////////
+  // Favorite Functionalities by creating user DOC
+  ////////////////////////////////////////////////////////////////////////////
+
   const addNewFavorite = (title, image, id) => {
     if (user) {
       const userRef = db.collection("users").doc(user.uid);
@@ -38,11 +58,14 @@ export const FirestoreContextProvider = ({ children }) => {
     }
   };
 
+  ////////////////////////////////////////////////////////////////////////////
+  // Delete Favorite
+  ////////////////////////////////////////////////////////////////////////////
+
   const deleteFavorite = (title, image, id) => {
     const userRef = db.collection("users").doc(user.uid);
 
     userRef.update({
-      name: user.displayName,
       favoriteRecipes: firebase.firestore.FieldValue.arrayRemove({
         title,
         image,
@@ -51,36 +74,20 @@ export const FirestoreContextProvider = ({ children }) => {
     });
   };
 
-  const allocateFavorites = () => {
+  ////////////////////////////////////////////////////////////////////////////
+  // Update userData useState
+  ////////////////////////////////////////////////////////////////////////////
+
+  const allocateUserData = () => {
     if (user) {
       db.collection("users")
         .doc(user?.uid)
         .onSnapshot((doc) => {
-          console.log("Current data: ", doc?.data());
-          setFavorites(doc.data()?.favoriteRecipes);
+          // console.log("Current data: ", doc?.data());
+          setUserData(doc?.data());
         });
     }
   };
-
-  // const getFavorites = () => {
-  //   const docRef = db.collection("users").doc(user?.uid);
-
-  //   docRef
-  //     .get()
-  //     .then((doc) => {
-  //       if (doc.exists) {
-  //         console.log("Document data:", doc.data());
-  //         setFavorites(doc.data().favoriteRecipes);
-  //         // console.log(favorites);
-  //       } else {
-  //         // doc.data() will be undefined in this case
-  //         console.log("No such document!");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error getting document:", error);
-  //     });
-  // };
 
   ////////////////////////////////////////////////////////////////////////////
   // Counting Likes Functionalities
@@ -122,7 +129,7 @@ export const FirestoreContextProvider = ({ children }) => {
         const likeArray = [];
         querySnapshot.forEach((doc) => {
           if (currentRecipes.filter((e) => e.id == doc.id).length > 0) {
-            console.log(doc.id, " => ", doc.data());
+            // console.log(doc.id, " => ", doc.data());
             likeArray.push(doc.data());
           }
         });
@@ -133,10 +140,11 @@ export const FirestoreContextProvider = ({ children }) => {
   return (
     <FirestoreContext.Provider
       value={{
+        updateUserData,
         addNewFavorite,
         deleteFavorite,
-        allocateFavorites,
-        favorites,
+        allocateUserData,
+        userData,
         likes,
         setCommunityLikes,
         allocateLikes,
