@@ -128,9 +128,9 @@ export const FirestoreContextProvider = ({ children }) => {
       .then((querySnapshot) => {
         const likeArray = [];
         querySnapshot.forEach((doc) => {
-          if (currentRecipes.filter((e) => e.id == doc.id).length > 0) {
+          if (currentRecipes?.filter((e) => e.id == doc.id).length > 0) {
             // console.log(doc.id, " => ", doc.data());
-            likeArray.push(doc.data());
+            likeArray.push(doc?.data());
           }
         });
         setLikes(likeArray);

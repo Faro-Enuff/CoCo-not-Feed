@@ -97,6 +97,7 @@ const SignIn = () => {
     signIn(profile);
     //apparently we need 2 goBack functions to be on the prev. page
     history.goBack();
+    history.goBack();
   };
 
   // console.log(profile);

@@ -9,6 +9,13 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* Delte the automatically generated Link styling */
 .recipes a {
   text-decoration: none;
+}
+
+/* Delete the ugly default styling of input type file */
+input[type="file"] {
+  display: none;
 }

@@ -3,6 +3,7 @@ import { Avatar, makeStyles, Paper, Typography } from "@material-ui/core";
 import CommentTextfield from "../Components/comment/CommentTextfield";
 import { CommentContext } from "../Context/commentContext";
 import moment from "moment";
+import { FirestoreContext } from "../Context/firestoreContext";
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     left: 0,
     overflow: "hidden",
-    height: "60%",
-    bottom: "15%",
+    height: "65%",
+    bottom: "10%",
     width: "100%",
     overflowY: "auto",
   },
@@ -77,33 +78,35 @@ const Comments = ({ recipeTitle, recipeId }) => {
 
   return (
     <div className={classes.flexContainer}>
-      <div className={classes.commentsContainer}>
-        {commentCollection?.map((comment, key) => (
-          <div className={classes.commentOrder} key={key}>
-            <div className={classes.userAvatar}>
-              <Avatar></Avatar>
-            </div>
-            <div className={classes.userComment}>
-              <Paper className={classes.comments}>
-                <div className={classes.commentElements}>
-                  <div>
-                    <Typography variant="h6">{comment.name}</Typography>
-                    <Typography variant="body2">
-                      {moment(comment.timestamp.toString()).fromNow()}
-                    </Typography>
+      <div className={classes.shadow}>
+        <div className={classes.commentsContainer}>
+          {commentCollection?.map((comment, key) => (
+            <div className={classes.commentOrder} key={key}>
+              <div className={classes.userAvatar}>
+                <Avatar src={comment.avatar}></Avatar>
+              </div>
+              <div className={classes.userComment}>
+                <Paper className={classes.comments}>
+                  <div className={classes.commentElements}>
+                    <div>
+                      <Typography variant="h6">{comment.name}</Typography>
+                      <Typography variant="body2">
+                        {moment(comment.timestamp.toString()).fromNow()}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body1">{comment.text}</Typography>
+                    </div>
                   </div>
-                  <div>
-                    <Typography variant="body1">{comment.text}</Typography>
-                  </div>
-                </div>
-              </Paper>
+                </Paper>
+              </div>
             </div>
-          </div>
-        ))}
-        <div ref={dummy} />
-      </div>
-      <div className={classes.commentTextfield}>
-        <CommentTextfield recipeTitle={recipeTitle} recipeId={recipeId} />
+          ))}
+          <div ref={dummy} />
+        </div>
+        <div className={classes.commentTextfield}>
+          <CommentTextfield recipeTitle={recipeTitle} recipeId={recipeId} />
+        </div>
       </div>
     </div>
   );

@@ -92,7 +92,7 @@ const DetailedRecipe = () => {
   // Use state for UI feature, color => for icon
   const [colorIcon, setColorIcon] = useState(false);
   useEffect(() => {
-    if (userData.favoriteRecipes.filter((e) => e.id == id).length > 0) {
+    if (userData?.favoriteRecipes?.filter((e) => e.id == id).length > 0) {
       // console.log("Yuhu");
       setColorIcon(true);
     } else {
