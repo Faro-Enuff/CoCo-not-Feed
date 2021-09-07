@@ -22,7 +22,7 @@ const FilterRadioSorting = () => {
   const handleOrder = () => {
     setOrder(!order);
   };
-  console.log(order);
+  // console.log(order);
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend" style={{ color: "#fff" }}>

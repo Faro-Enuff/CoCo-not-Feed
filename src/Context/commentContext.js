@@ -14,7 +14,9 @@ export const CommentContextProvider = ({ children }) => {
 
   const writeNewComment = (recipeId, recipeTitle, commentText) => {
     if (user) {
-      console.log(recipeId);
+      // console.log(typeof recipeId);
+      // console.log(commentText);
+      // console.log(recipeTitle);
       const commentsRef = db.collection("recipes").doc(recipeId.toString());
       console.log(commentsRef);
       console.log(userData?.avatar);
@@ -27,7 +29,7 @@ export const CommentContextProvider = ({ children }) => {
               name: user.displayName,
               text: commentText,
               timestamp: new Date().toString(),
-              avatar: userData.avatar,
+              avatar: userData?.avatar || "",
             }),
           },
           { merge: true }

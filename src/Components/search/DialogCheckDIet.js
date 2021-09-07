@@ -47,7 +47,9 @@ const DialogCheckDiet = () => {
   const classes = useStyles();
   const { search } = useContext(FormContext);
   const [open, setOpen] = useState(false);
-  console.log(search.diet);
+
+  // console.log(search.diet);
+
   const handleClickOpen = () => {
     setOpen(true);
   };

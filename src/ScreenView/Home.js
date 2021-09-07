@@ -1,17 +1,25 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+
+// React Router Dom
+import { useHistory } from "react-router-dom";
+
+// Internal Imports
 import { apiKey } from "../utils/apiKey";
-import Grid from "@material-ui/core/Grid";
-import { Container } from "@material-ui/core";
 import FormCon from "../Components/search/FormCon";
 import fetchFunction from "../utils/fetchFunction";
 import { FormContext } from "../Context/FormContext";
-import { useHistory } from "react-router-dom";
+
+// Core Imports
+import { Container, Grid } from "@material-ui/core";
 
 const Home = () => {
   let history = useHistory();
-  const { setRecipePreview, setIsPending, order } = useContext(FormContext);
-  // const [error, setError] = useState(null);
 
+  // Form Context to receive all the necessary data
+  const { setSearch, setRecipePreview, setIsPending, order } =
+    useContext(FormContext);
+
+  // Click Handler for the fetch function for the Recipe List by creating URL out of all Inputs
   const handleFetchList = (search) => {
     const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&includeIngredients=${
       search.searchTerm
@@ -20,12 +28,24 @@ const Home = () => {
     }&instructionsRequired=true&sort=${search.preference}&sortDirection=${
       order ? "asc" : "desc"
     }`;
-    console.log(url);
+
+    // console.log(url);
+
+    // Fetch Function
     fetchFunction(url, setRecipePreview, setIsPending);
+
+    // Redirect to the Recipe List
     history.push("/recipes");
+
+    // Reset the Input Values
+    setSearch({
+      searchTerm: "",
+      intolerances: "",
+      diet: "",
+      preference: "popularity",
+    });
   };
 
-  console.log("Call");
   return (
     <Container>
       <Grid container>

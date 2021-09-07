@@ -39,6 +39,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import PeopleIcon from "@material-ui/icons/People";
 import { AuthContext } from "../Context/authContext";
+import { CommentContext } from "../Context/commentContext";
 
 const useStyles = makeStyles((muiTheme) => ({
   loader: {
@@ -110,7 +111,7 @@ const DetailedRecipe = () => {
       setRecipeDetails,
       setIsPending
     );
-  }, [id]);
+  }, []);
 
   // Use state for UI feature, expand => for showing instructions
   const [expanded, setExpanded] = useState(false);
@@ -118,11 +119,19 @@ const DetailedRecipe = () => {
     setExpanded(!expanded);
   };
 
-  const { userData } = useContext(AuthContext);
+  const { user, userData } = useContext(AuthContext);
 
   // Access to Firestore Context functions and useState for handling Recipe Favorites / Likes
   const { addNewFavorite, deleteFavorite, setCommunityLikes, deleteLikes } =
     useContext(FirestoreContext);
+
+  // Access to CommentContext
+  const { allocateComments } = useContext(CommentContext);
+
+  //Retrieving the data from Firestore with realtime updating
+  useEffect(() => {
+    allocateComments(id);
+  }, [recipeDetails]);
 
   // Use state for UI feature, color => for icon
   const [colorIcon, setColorIcon] = useState(false);
@@ -158,13 +167,16 @@ const DetailedRecipe = () => {
     }
   };
 
+  const redirectSignIn = () => {
+    history.push("/signin");
+  };
+
   // console.log(recipeDetails);
 
   return (
     <Container component="main" maxWidth="xs" className={classes.detailedPage}>
       <div>
         {/* Loader */}
-
         {isPending && (
           <div className={classes.loader}>
             <Avatar size="large" src={cocoLoader2} />
@@ -221,7 +233,7 @@ const DetailedRecipe = () => {
                   <CardActions disableSpacing>
                     <IconButton
                       aria-label="add to favorites"
-                      onClick={handleFavoriteClick}
+                      onClick={user ? handleFavoriteClick : redirectSignIn}
                     >
                       {colorIcon ? (
                         <FavoriteIcon color="primary" />
