@@ -3,10 +3,6 @@
 # Src
 
 
-firbaseData.js
-apiKeys.js
-apiKey.js
-
 # dependencies
 /node_modules
 /.pnp
@@ -28,3 +24,5 @@ apiKey.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.env
