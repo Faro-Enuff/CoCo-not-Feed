@@ -1,17 +1,25 @@
 import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
+
+// Internal Imports
 import FilterCheckIntolerances from "./FilterCheckIntolerances";
 import { FormContext } from "../../Context/FormContext";
+
+// Core Imports
+import {
+  Box,
+  Slide,
+  DialogTitle,
+  DialogContentText,
+  Button,
+  Dialog,
+  DialogContent,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((muiTheme) => ({
   btn: {
     borderWidth: 3,
+    color: muiTheme.palette.secondary.dark,
   },
   dialog: {
     display: "flex",
@@ -49,15 +57,17 @@ const DialogCheckIntolerances = () => {
   };
   return (
     <div className={classes.dialog}>
-      <Button
-        variant="outlined"
-        color={search.intolerances ? "primary" : "secondary"}
-        onClick={handleClickOpen}
-        size="large"
-        className={classes.btn}
-      >
-        Intolerance
-      </Button>
+      <Box borderRadius={5} boxShadow={3}>
+        <Button
+          variant="outlined"
+          color={search.intolerances ? "primary" : "secondary"}
+          onClick={handleClickOpen}
+          size="large"
+          className={classes.btn}
+        >
+          Intolerance
+        </Button>
+      </Box>
       <Dialog
         open={open}
         fullWidth={true}

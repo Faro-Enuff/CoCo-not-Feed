@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
       .doc(user?.uid)
       .set({
         name: user?.displayName,
-        avatar: "",
+        avatar: user?.photoURL || "",
         favoriteRecipes: [],
       })
       .then((docRef) => {
@@ -55,9 +55,11 @@ export const AuthContextProvider = ({ children }) => {
       .signInWithPopup(googleAuth)
       .then((result) => {
         console.log("User has signed in");
+        console.log(result);
         // The signed-in user info.
         const user = result.user;
         setUser(user);
+        addDocUserData(user);
       })
       .catch((error) => {
         // Handle Errors here.

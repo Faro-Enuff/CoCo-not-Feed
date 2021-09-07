@@ -1,9 +1,11 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
+
+// Internal Imports
 import { FormContext } from "../../Context/FormContext";
+
+// Core Imports
+import { Box, TextField, FormControl } from "@material-ui/core";
 
 const CssTextField = withStyles({
   root: {
@@ -51,20 +53,22 @@ const SearchBarInput = ({ handleKeyEnter }) => {
   return (
     <div className={classes.root}>
       <FormControl className={classes.form}>
-        <CssTextField
-          className={classes.margin}
-          InputProps={{ classes: { notchedOutline: classes.notchedOutline } }}
-          id="searchRecipe"
-          label="Enter 3 ingredients (cheese, onion..)"
-          onChange={handleSearch}
-          onKeyUp={handleKeyEnter}
-          name="searchTerm"
-          value={search.searchTerm}
-          variant="outlined"
-          color={search.searchTerm ? "primary" : "secondary"}
-          fullWidth
-          required
-        />
+        <Box boxShadow={3}>
+          <CssTextField
+            className={classes.margin}
+            InputProps={{ classes: { notchedOutline: classes.notchedOutline } }}
+            id="searchRecipe"
+            label="Enter 3 ingredients (cheese, onion..)"
+            onChange={handleSearch}
+            onKeyUp={handleKeyEnter}
+            name="searchTerm"
+            value={search.searchTerm}
+            variant="outlined"
+            color={search.searchTerm ? "primary" : "secondary"}
+            fullWidth
+            required
+          />
+        </Box>
       </FormControl>
     </div>
   );

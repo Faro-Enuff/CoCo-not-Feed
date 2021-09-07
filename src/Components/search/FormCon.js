@@ -1,21 +1,31 @@
 import React, { useContext } from "react";
-import { FormContext } from "../../Context/FormContext";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+
+// Internal Imports
+import { FormContext } from "../../Context/FormContext";
 import DialogRadio from "./DialogRadio";
 import DialogCheckDiet from "./DialogCheckDIet";
 import DialogCheckIntolerances from "./DialogCheckIntolerance";
 import SearchBarInput from "./SearchBarInput";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
+
+// Image Imports
 import logo from "./logo.jpg";
-import Typography from "@material-ui/core/Typography";
+
+// Core Imports
+import {
+  Box,
+  Grid,
+  Container,
+  FormControl,
+  Button,
+  Avatar,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((muiTheme) => ({
   heading: {
     margin: "5%",
+    textShadow: "2px 2px 2px #000000",
   },
   logoPosition: {
     display: "flex",
@@ -34,11 +44,14 @@ const useStyles = makeStyles((muiTheme) => ({
     margin: 0,
   },
   btn: {
-    minWidth: "90%",
-    marginBottom: "20%",
+    minWidth: "100%",
     fontWeight: "bold",
     borderRadius: 25,
     opacity: 0.8,
+    textShadow: "1px 1px 1px #000000",
+  },
+  btnGrid: {
+    marginBottom: "30%",
   },
 }));
 
@@ -73,11 +86,15 @@ const FormCon = ({ handleFetchList }) => {
           >
             <Grid item xs={12}>
               <div className={classes.heading}>
-                <Typography variant="h5">My</Typography>
-                <Typography variant="h3">
+                <Typography color="primary" variant="h5">
+                  My
+                </Typography>
+                <Typography color="secondary" variant="h3">
                   <strike>CoConot</strike>{" "}
                 </Typography>
-                <Typography variant="h5">Feed</Typography>
+                <Typography color="primary" variant="h5">
+                  Feed
+                </Typography>
                 <div className={classes.logoPosition}>
                   <Avatar
                     alt="logo"
@@ -94,18 +111,20 @@ const FormCon = ({ handleFetchList }) => {
               <DialogCheckIntolerances />
               <DialogRadio />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.btnGrid}>
               <div className={classes.btn}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleButtonClick}
-                  className={classes.btn}
-                  size="large"
-                >
-                  CoCo Search
-                </Button>
+                <Box borderRadius={25} boxShadow={3}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleButtonClick}
+                    className={classes.btn}
+                    size="large"
+                  >
+                    CoCo Search
+                  </Button>
+                </Box>
               </div>
             </Grid>
           </Grid>

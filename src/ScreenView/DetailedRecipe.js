@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 
 // React router dom
 import { useParams, useHistory } from "react-router-dom";
@@ -14,10 +16,9 @@ import RecipeWinePairing from "../Components/detailed/RecipeWinePairing";
 import RecipeInstructions from "../Components/detailed/RecipeInstructions";
 import CommentDialog from "../Components/comment/CommentDialog";
 
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-
+// Core Imports
 import {
+  Box,
   Grid,
   Container,
   Card,
@@ -34,7 +35,8 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CommentIcon from "@material-ui/icons/Comment";
+import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
+import PeopleIcon from "@material-ui/icons/People";
 
 const useStyles = makeStyles((muiTheme) => ({
   detailedPage: {
@@ -42,7 +44,11 @@ const useStyles = makeStyles((muiTheme) => ({
   },
   root: {
     maxWidth: "auto",
+    maxHeight: 500,
     borderRadius: 20,
+  },
+  cardContent: {
+    maxHeight: 75,
   },
   media: {
     height: 0,
@@ -61,6 +67,14 @@ const useStyles = makeStyles((muiTheme) => ({
   avatar: {
     backgroundColor: "#bcaaa4",
     color: "#fff",
+  },
+  scoreBox: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  scoreElements: {
+    display: "flex",
+    justifyContent: "space-between",
   },
   paper: {
     marginTop: 50,
@@ -149,98 +163,113 @@ const DetailedRecipe = () => {
         {recipeDetails && (
           <Grid container>
             <Grid item xs={12}>
-              <Card className={classes.root}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      <strike>CoCo</strike>
-                    </Avatar>
-                  }
-                  title={recipeDetails.title}
-                  subheader={`Ready in ${recipeDetails.readyInMinutes} min., Servings:
+              <Box borderRadius={23} boxShadow={2}>
+                <Card className={classes.root}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        <strike>CoCo</strike>
+                      </Avatar>
+                    }
+                    title={recipeDetails.title}
+                    subheader={`Ready in ${recipeDetails.readyInMinutes} min., Servings:
         ${recipeDetails.servings}`}
-                />
-                <CardMedia
-                  className={classes.media}
-                  image={recipeDetails.image}
-                  title={`recipe-${recipeDetails.title}`}
-                />
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="div"
-                  >
-                    <Typography paragraph>
-                      <b>Community Score: </b> {recipeDetails.spoonacularScore}{" "}
-                      %
-                    </Typography>
-                    <Typography paragraph>
-                      <b>Health Score: </b> {recipeDetails.healthScore} %
-                    </Typography>
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton
-                    aria-label="add to favorites"
-                    onClick={handleFavoriteClick}
-                  >
-                    {colorIcon ? (
-                      <FavoriteIcon color="primary" />
-                    ) : (
-                      <FavoriteIcon />
-                    )}
-                  </IconButton>
-                  <CommentDialog
-                    recipeTitle={recipeDetails.title}
-                    recipeId={recipeDetails.id}
                   />
-                  <IconButton
-                    className={clsx(classes.expand, {
-                      [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
+                  <CardMedia
+                    className={classes.media}
+                    image={recipeDetails.image}
+                    title={`recipe-${recipeDetails.title}`}
+                  />
+                  <CardContent
+                    className={classes.cardContent}
+                    justifyContent="center"
+                    alignItems="center"
                   >
-                    i
-                    <ExpandMoreIcon />
-                  </IconButton>
-                </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  {recipeDetails && (
-                    <RecipeInstructions
-                      stepInstructions={recipeDetails.analyzedInstructions}
-                      textInstructions={recipeDetails.instructions}
+                    <Box p={1} alignItems="center" className={classes.scoreBox}>
+                      <Box mr={5}>
+                        <Typography variant="h6">Scores:</Typography>
+                      </Box>
+
+                      <Box mr={5} alignItems="flex-end">
+                        <Typography variant="subtitle1">
+                          <PeopleIcon color="secondary" />{" "}
+                          {recipeDetails.spoonacularScore} %
+                        </Typography>
+                      </Box>
+                      <Box alignItems="center">
+                        <Typography variant="subtitle1">
+                          <FitnessCenterIcon color="secondary" />{" "}
+                          {recipeDetails.healthScore} %
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    <Typography paragraph></Typography>
+                  </CardContent>
+                  <CardActions disableSpacing>
+                    <IconButton
+                      aria-label="add to favorites"
+                      onClick={handleFavoriteClick}
+                    >
+                      {colorIcon ? (
+                        <FavoriteIcon color="primary" />
+                      ) : (
+                        <FavoriteIcon />
+                      )}
+                    </IconButton>
+                    <CommentDialog
+                      recipeTitle={recipeDetails.title}
+                      recipeId={recipeDetails.id}
                     />
-                  )}
-                </Collapse>
-              </Card>
+                    <IconButton
+                      className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                      })}
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="show more"
+                    >
+                      i
+                      <ExpandMoreIcon />
+                    </IconButton>
+                  </CardActions>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    {recipeDetails && (
+                      <RecipeInstructions
+                        stepInstructions={recipeDetails.analyzedInstructions}
+                        textInstructions={recipeDetails.instructions}
+                      />
+                    )}
+                  </Collapse>
+                </Card>
+              </Box>
             </Grid>
           </Grid>
         )}
       </div>
       <Grid container className={classes.gridSpace}>
         <Grid item xs={12}>
-          <Card className={classes.paper}>
-            {recipeDetails && (
-              <RecipeIngredients
-                ingredients={recipeDetails.extendedIngredients}
-              />
-            )}
+          <Box borderRadius={23} boxShadow={2}>
+            <Card className={classes.paper}>
+              {recipeDetails && (
+                <RecipeIngredients
+                  ingredients={recipeDetails.extendedIngredients}
+                />
+              )}
 
-            {recipeDetails && (
-              <RecipeMacros nutrition={recipeDetails?.nutrition} />
-            )}
+              {recipeDetails && (
+                <RecipeMacros nutrition={recipeDetails?.nutrition} />
+              )}
 
-            {recipeDetails && (
-              <RecipeMicros nutrition={recipeDetails.nutrition} />
-            )}
+              {recipeDetails && (
+                <RecipeMicros nutrition={recipeDetails.nutrition} />
+              )}
 
-            {recipeDetails?.winePairing.pairedWines && (
-              <RecipeWinePairing wines={recipeDetails.winePairing} />
-            )}
-          </Card>
+              {recipeDetails?.winePairing.pairedWines && (
+                <RecipeWinePairing wines={recipeDetails.winePairing} />
+              )}
+            </Card>
+          </Box>
         </Grid>
       </Grid>
     </Container>

@@ -29,29 +29,30 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   heading: {
+    color: "#d7ccc8",
     display: "flex",
     marginTop: "5%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    textShadow: "2px 2px 2px #000000",
   },
   profileCard: {
-    backgroundColor: theme.palette.secondary.light,
     borderRadius: 25,
+    backgroundColor: "#efebe9",
   },
   profileInformation: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "right",
-    marginRight: "8%",
+    marginRight: "5%",
     marginTop: "5%",
     marginBottom: "5%",
   },
   profileName: {
     display: "flex",
-    marginRight: "0%",
-    paddingBottom: "15%",
-    alignItems: "center",
+    marginRight: "5%",
+    marginTop: "1%",
   },
   pictureDiv: {
     display: "flex",
@@ -59,8 +60,6 @@ const useStyles = makeStyles((theme) => ({
   profilePicture: {
     width: theme.spacing(8),
     height: theme.spacing(8),
-    border: 2,
-    borderColor: theme.palette.primary.main,
   },
   upload: {
     display: "flex",
@@ -186,20 +185,33 @@ const Profile = () => {
                   onClick={() => onClickSignOut()}
                   variant="contained"
                   color="primary"
+                  size="small"
                 >
                   Sign Out
                 </Button>
               </div>
               <Box
                 border={2}
-                boxShadow={2}
+                color="secondary.main"
+                boxShadow={3}
                 borderRadius={25}
-                borderColor="primary.main"
               >
                 <Card className={classes.profileCard}>
                   <div className={classes.profileInformation}>
                     <div className={classes.profileName}>
-                      <Typography variant="body1">{userData.name}</Typography>
+                      <Typography variant="h5">{userData?.name}</Typography>
+                    </div>
+                    <div className={classes.pictureDiv}>
+                      <Box
+                        border={2}
+                        borderRadius="50%"
+                        borderColor="secondary.main"
+                      >
+                        <Avatar
+                          src={userData?.avatar}
+                          className={classes.profilePicture}
+                        />
+                      </Box>
                     </div>
                     <div className={classes.upload}>
                       <Input
@@ -217,26 +229,12 @@ const Profile = () => {
                         />
                       </label>
                     </div>
-                    <div className={classes.pictureDiv}>
-                      <Box
-                        border={2}
-                        borderRadius="50%"
-                        borderColor="secondary.main"
-                      >
-                        <Avatar
-                          src={userData?.avatar}
-                          className={classes.profilePicture}
-                        />
-                      </Box>
-                    </div>
                   </div>
                 </Card>
               </Box>
               <div className={classes.favoriteRecipes}>
                 <div className={classes.heading}>
-                  <Typography variant="h4">
-                    <strike>CoCo</strike> Favorites
-                  </Typography>
+                  <Typography variant="h3">Favorites</Typography>
                   {userData && (
                     <RecipeList currentRecipes={userData?.favoriteRecipes} />
                   )}
@@ -247,11 +245,15 @@ const Profile = () => {
             <div>
               <div className={classes.favoriteRecipes}>
                 <div className={classes.heading}>
-                  <Typography variant="h5">Your</Typography>
-                  <Typography variant="h3">
+                  <Typography color="primary" variant="h5">
+                    Your
+                  </Typography>
+                  <Typography color="secondary" variant="h3">
                     <strike>CoConot</strike>{" "}
                   </Typography>
-                  <Typography variant="h5">Profile</Typography>
+                  <Typography color="primary" variant="h5">
+                    Profile
+                  </Typography>
                   <div className={classes.logoPosition}>
                     <Avatar
                       alt="logo"

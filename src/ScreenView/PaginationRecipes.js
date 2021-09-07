@@ -1,16 +1,22 @@
-import React from "react";
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
 // Internal Import
 import { FormContext } from "../Context/FormContext";
 import RecipeList from "../Components/RecipeList";
+
 // Core Import
-import { Container, Button, Typography, Grid } from "@material-ui/core";
+import { Box, Container, Button, Typography, Grid } from "@material-ui/core";
 
 // Styling
 const useStyles = makeStyles((muiTheme) => ({
   header: {
-    marginTop: "10%",
+    marginTop: "5%",
+    borderRadius: 20,
+    color: "#d7ccc8",
+    textShadow: "2px 2px 2px #000000",
+    paddingTop: "5%",
+    textAlign: "center",
   },
   recipePreview: {
     display: "flex",
@@ -85,7 +91,7 @@ const PaginationRecipes = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.header}>
-        <Typography variant="h4">Results</Typography>
+        <Typography variant="h3">Results</Typography>
       </div>
       <div className={classes.recipePreview}>
         <Grid container spacing={2}>
