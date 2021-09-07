@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { useParams, useHistory } from "react-router-dom";
 
 // Intern Component Imports
-import { apiKey } from "../utils/apiKey";
+import { apiKey } from "../utils/apiKeys";
 import fetchFunction from "../utils/fetchFunction";
 import { FirestoreContext } from "../Context/firestoreContext";
 import RecipeIngredients from "../Components/detailed/RecipeIngredients";

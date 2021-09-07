@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Avatar, makeStyles, Paper, Typography } from "@material-ui/core";
 import CommentTextfield from "../Components/comment/CommentTextfield";
 import { CommentContext } from "../Context/commentContext";
 import moment from "moment";
-import { FirestoreContext } from "../Context/firestoreContext";
 import { AuthContext } from "../Context/authContext";
 
 const useStyles = makeStyles((theme) => ({

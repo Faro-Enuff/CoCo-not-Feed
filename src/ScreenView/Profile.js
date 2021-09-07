@@ -9,9 +9,8 @@ import { useHistory } from "react-router-dom";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 
 // Internal Imports
-import { storage } from "../firebase";
+import { storage } from "../firebase.js";
 import { AuthContext } from "../Context/authContext";
-import { FirestoreContext } from "../Context/firestoreContext";
 import RecipeList from "../Components/RecipeList";
 import logo from "../Components/search/logo.jpg";
 

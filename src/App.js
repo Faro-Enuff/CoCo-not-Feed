@@ -1,14 +1,8 @@
 import Home from "./ScreenView/Home";
-import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-} from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DetailedRecipe from "./ScreenView/DetailedRecipe";
 import Profile from "./ScreenView/Profile";
-import Definitions from "./ScreenView/Definitions";
 import { FormContextProvider } from "./Context/FormContext";
 import { AuthContextProvider } from "./Context/authContext";
 import { FirestoreContextProvider } from "./Context/firestoreContext";
@@ -60,11 +54,6 @@ function App() {
                       />
                       <Route path="/recipe/:id" component={DetailedRecipe} />
                       <Route path="/profile" exact component={Profile} />
-                      <Route
-                        path="/definitions"
-                        exact
-                        component={Definitions}
-                      />
                       <Route path="/signup" exact component={SignUp} />
                       <Route path="/signin" exact component={SignIn} />
                     </Switch>
