@@ -3,20 +3,35 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Internal Import
 import { FormContext } from "../Context/FormContext";
+import cocoLoader2 from "../Img/cocoLoader2.png";
 import RecipeList from "../Components/RecipeList";
 
 // Core Import
-import { Box, Container, Button, Typography, Grid } from "@material-ui/core";
+import {
+  Box,
+  Avatar,
+  Container,
+  Button,
+  Typography,
+  Grid,
+} from "@material-ui/core";
 
 // Styling
 const useStyles = makeStyles((muiTheme) => ({
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+  },
   header: {
-    marginTop: "5%",
     borderRadius: 20,
     color: "#d7ccc8",
-    textShadow: "2px 2px 2px #000000",
-    paddingTop: "5%",
-    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#efebe9",
+    textShadow: "1px 1px 1px #000000",
   },
   recipePreview: {
     display: "flex",
@@ -39,7 +54,6 @@ const useStyles = makeStyles((muiTheme) => ({
     marginTop: muiTheme.spacing(4),
     fontWeight: "bold",
     borderRadius: 25,
-    marginLeft: 20,
   },
 }));
 
@@ -90,16 +104,29 @@ const PaginationRecipes = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <div className={classes.header}>
-        <Typography variant="h3">Results</Typography>
-      </div>
+      <Box
+        mt={2}
+        p={2}
+        boxShadow={3}
+        border={2}
+        borderRadius={25}
+        borderColor="secondary.main"
+      >
+        <div className={classes.header}>
+          <Typography color="secondary" variant="h4">
+            Results
+          </Typography>
+        </div>
+      </Box>
       <div className={classes.recipePreview}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {currentRecipes ? (
               <RecipeList currentRecipes={currentRecipes} />
             ) : (
-              <div className="loader">Loading...</div>
+              <div className={classes.loader}>
+                <Avatar size="large" src={cocoLoader2} />
+              </div>
             )}
           </Grid>
         </Grid>
@@ -110,13 +137,15 @@ const PaginationRecipes = () => {
                 {pageNumbers.length >= 1 &&
                   pageNumbers.map((number) => (
                     <li key={number} className="page-item">
-                      <Button
-                        color="primary"
-                        variant="contained"
-                        className={classes.btn}
-                      >
-                        <a onClick={() => onClickHandler(number)}>{number}</a>
-                      </Button>
+                      <Box m={1} boxShadow={3} borderRadius={25}>
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          className={classes.btn}
+                        >
+                          <a onClick={() => onClickHandler(number)}>{number}</a>
+                        </Button>
+                      </Box>
                     </li>
                   ))}
               </ul>

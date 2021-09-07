@@ -9,8 +9,7 @@ export const CommentContext = createContext();
 
 export const CommentContextProvider = ({ children }) => {
   let history = useHistory();
-  const { user } = useContext(AuthContext);
-  const { userData } = useContext(FirestoreContext);
+  const { user, userData } = useContext(AuthContext);
   const [commentCollection, setCommentCollection] = useState(null);
 
   const writeNewComment = (recipeId, recipeTitle, commentText) => {
@@ -18,7 +17,7 @@ export const CommentContextProvider = ({ children }) => {
       console.log(recipeId);
       const commentsRef = db.collection("recipes").doc(recipeId.toString());
       console.log(commentsRef);
-      console.log(userData.avatar);
+      console.log(userData?.avatar);
       commentsRef
         .set(
           {

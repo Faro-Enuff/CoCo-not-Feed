@@ -15,6 +15,7 @@ import RecipeMicros from "../Components/detailed/RecipeMicros";
 import RecipeWinePairing from "../Components/detailed/RecipeWinePairing";
 import RecipeInstructions from "../Components/detailed/RecipeInstructions";
 import CommentDialog from "../Components/comment/CommentDialog";
+import cocoLoader2 from "../Img/cocoLoader2.png";
 
 // Core Imports
 import {
@@ -37,18 +38,26 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import PeopleIcon from "@material-ui/icons/People";
+import { AuthContext } from "../Context/authContext";
 
 const useStyles = makeStyles((muiTheme) => ({
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+  },
   detailedPage: {
     paddingTop: muiTheme.spacing(4),
   },
   root: {
     maxWidth: "auto",
-    maxHeight: 500,
+    maxHeight: "auto",
     borderRadius: 20,
   },
   cardContent: {
-    maxHeight: 75,
+    maxHeight: "auto",
   },
   media: {
     height: 0,
@@ -103,31 +112,29 @@ const DetailedRecipe = () => {
     );
   }, [id]);
 
-  // Use state for UI feature, color => for icon
-  const [colorIcon, setColorIcon] = useState(false);
-  useEffect(() => {
-    if (userData?.favoriteRecipes?.filter((e) => e.id == id).length > 0) {
-      // console.log("Yuhu");
-      setColorIcon(true);
-    } else {
-      setColorIcon(false);
-    }
-  }, []);
-
   // Use state for UI feature, expand => for showing instructions
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const { userData } = useContext(AuthContext);
+
   // Access to Firestore Context functions and useState for handling Recipe Favorites / Likes
-  const {
-    addNewFavorite,
-    deleteFavorite,
-    userData,
-    setCommunityLikes,
-    deleteLikes,
-  } = useContext(FirestoreContext);
+  const { addNewFavorite, deleteFavorite, setCommunityLikes, deleteLikes } =
+    useContext(FirestoreContext);
+
+  // Use state for UI feature, color => for icon
+  const [colorIcon, setColorIcon] = useState(false);
+
+  useEffect(() => {
+    if (userData?.favoriteRecipes?.filter((e) => e.id == id).length > 0) {
+      console.log("Yuhu");
+      setColorIcon(true);
+    } else {
+      setColorIcon(false);
+    }
+  }, [recipeDetails]);
 
   const handleFavoriteClick = () => {
     // console.log(id);
@@ -157,7 +164,12 @@ const DetailedRecipe = () => {
     <Container component="main" maxWidth="xs" className={classes.detailedPage}>
       <div>
         {/* Loader */}
-        {isPending && <div>Loading...</div>}
+
+        {isPending && (
+          <div className={classes.loader}>
+            <Avatar size="large" src={cocoLoader2} />
+          </div>
+        )}
 
         {/* Recipe Card */}
         {recipeDetails && (

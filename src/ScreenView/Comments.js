@@ -4,6 +4,7 @@ import CommentTextfield from "../Components/comment/CommentTextfield";
 import { CommentContext } from "../Context/commentContext";
 import moment from "moment";
 import { FirestoreContext } from "../Context/firestoreContext";
+import { AuthContext } from "../Context/authContext";
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -64,12 +65,18 @@ const Comments = ({ recipeTitle, recipeId }) => {
   //Retrieving all Comments from the db
   const { commentCollection } = useContext(CommentContext);
   // console.log(commentCollection);
+  const { user, allocateUserData } = useContext(AuthContext);
 
   // Make the scroll from bottom to top
   const dummy = useRef(null);
   const scrollToBottom = () => {
     dummy.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    allocateUserData();
+  }, [user]);
+
   useEffect(() => {
     scrollToBottom();
   });

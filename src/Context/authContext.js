@@ -6,26 +6,8 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState("Not logged in");
+  const [userData, setUserData] = useState([]);
 
-  ////////////////////////////////////////////////////////////////////////////
-  // Function to create userData -> doc gets named by user.uid
-  ////////////////////////////////////////////////////////////////////////////
-
-  const addDocUserData = (user) => {
-    db.collection("users")
-      .doc(user?.uid)
-      .set({
-        name: user?.displayName,
-        avatar: user?.photoURL || "",
-        favoriteRecipes: [],
-      })
-      .then((docRef) => {
-        console.log("Document successfully written!");
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
-  };
   ////////////////////////////////////////////////////////////////////////////
   //Auth State Observer
   ////////////////////////////////////////////////////////////////////////////
@@ -116,6 +98,7 @@ export const AuthContextProvider = ({ children }) => {
         const user = userCredential.user;
         console.log(`user`, user);
         setUser(user);
+        allocateUserData();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -124,6 +107,7 @@ export const AuthContextProvider = ({ children }) => {
         console.log(`errorCode`, errorCode);
       });
   };
+  console.log(user);
 
   ////////////////////////////////////////////////////////////////////////////
   // SignOut Function
@@ -141,10 +125,73 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
+  ////////////////////////////////////////////////////////////////////////////
+  // Function to create userData -> doc gets named by user.uid
+  ////////////////////////////////////////////////////////////////////////////
+
+  const addDocUserData = (user) => {
+    db.collection("users")
+      .doc(user?.uid)
+      .set({
+        name: user?.displayName,
+        avatar: user?.photoURL || "",
+        favoriteRecipes: [],
+      })
+      .then((docRef) => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+  };
+
+  ////////////////////////////////////////////////////////////////////////////
+  // Update User Data
+  ////////////////////////////////////////////////////////////////////////////
+
+  const updateUserData = (updateData) => {
+    db.collection("users")
+      .doc(user.uid)
+      .set({
+        ...updateData,
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+        setUserData({ ...updateData });
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  ////////////////////////////////////////////////////////////////////////////
+  // Update userData useState
+  ////////////////////////////////////////////////////////////////////////////
+
+  const allocateUserData = () => {
+    if (user) {
+      db.collection("users")
+        .doc(user?.uid)
+        .onSnapshot((doc) => {
+          // console.log("Current data: ", doc?.data());
+          setUserData(doc?.data());
+        });
+    }
+  };
+
   // Return the Provider for the Router
   return (
     <AuthContext.Provider
-      value={{ user, signUp, signIn, signOut, signInWithGooglePopUp }}
+      value={{
+        user,
+        signUp,
+        signIn,
+        signOut,
+        signInWithGooglePopUp,
+        updateUserData,
+        allocateUserData,
+        userData,
+      }}
     >
       {children}
     </AuthContext.Provider>

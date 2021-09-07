@@ -26,12 +26,12 @@ import {
   Grid,
   Avatar,
 } from "@material-ui/core";
+import ProfileMenuNew from "../Components/profile/ProfileMenuNew";
 
 const useStyles = makeStyles((theme) => ({
-  heading: {
+  mainDiv: {
     color: "#d7ccc8",
     display: "flex",
-    marginTop: "5%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   profileName: {
     display: "flex",
+    alignItems: "center",
     marginRight: "5%",
-    marginTop: "1%",
   },
   pictureDiv: {
     display: "flex",
@@ -77,9 +77,6 @@ const useStyles = makeStyles((theme) => ({
   favoriteContainer: {
     display: "flex",
     width: "100%",
-
-    alignItems: "center",
-    justifyContent: "center",
   },
   favoriteRecipes: {
     display: "flex",
@@ -91,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     marginTop: "5%",
-    marginBottom: "5%",
   },
 }));
 
@@ -100,22 +96,13 @@ const Profile = () => {
   let history = useHistory();
 
   // useContext for the AuthContext, to have the user object for verification of displaying data as well as the signOut function
-  const { user, signOut } = useContext(AuthContext);
-
-  // useContext for the Favorite Context, to have access to the get function, as well as the useSate of favorites
-  const { allocateUserData, userData, updateUserData } =
-    useContext(FirestoreContext);
+  const { user, signOut, allocateUserData, userData, updateUserData } =
+    useContext(AuthContext);
 
   // Realtime update of the Favorites in Firestore gets initialized whenever the user changes
   useEffect(() => {
     allocateUserData();
   }, [user]);
-
-  // Sign Out function gets fired if you click the button + Redirect to the Homescreen
-  const onClickSignOut = () => {
-    signOut();
-    history.push("/");
-  };
 
   // Upload handler of an image
   const [imgLoading, setImgLoading] = useState(0);
@@ -170,6 +157,27 @@ const Profile = () => {
 
   // console.log(`favorites`, userData.favoriteRecipes);
   // console.log(user?.email);
+
+  //Hide and Show features
+  const [showDetails, setShowDetails] = useState(false);
+  const handleShowDetails = (callback) => {
+    resetView();
+    setShowDetails(!showDetails);
+    callback(null);
+  };
+
+  const [showFavorites, setShowFavorites] = useState(false);
+  const handleShowFavorites = (callback) => {
+    resetView();
+    setShowFavorites(!showFavorites);
+    callback(null);
+  };
+
+  const resetView = () => {
+    setShowDetails(false);
+    setShowFavorites(false);
+  };
+
   return (
     <Container
       component="main"
@@ -181,70 +189,88 @@ const Profile = () => {
           {user ? (
             <div>
               <div className={classes.signOutButton}>
-                <Button
-                  onClick={() => onClickSignOut()}
-                  variant="contained"
-                  color="primary"
-                  size="small"
+                <Box m={3} boxShadow={3} borderRadius={10}>
+                  <ProfileMenuNew
+                    handleShowDetails={handleShowDetails}
+                    handleShowFavorites={handleShowFavorites}
+                  />
+                </Box>
+              </div>
+
+              {/* Profile Blog */}
+
+              {showDetails && (
+                <Box
+                  border={2}
+                  color="secondary.main"
+                  boxShadow={3}
+                  borderRadius={25}
                 >
-                  Sign Out
-                </Button>
-              </div>
-              <Box
-                border={2}
-                color="secondary.main"
-                boxShadow={3}
-                borderRadius={25}
-              >
-                <Card className={classes.profileCard}>
-                  <div className={classes.profileInformation}>
-                    <div className={classes.profileName}>
-                      <Typography variant="h5">{userData?.name}</Typography>
-                    </div>
-                    <div className={classes.pictureDiv}>
-                      <Box
-                        border={2}
-                        borderRadius="50%"
-                        borderColor="secondary.main"
-                      >
-                        <Avatar
-                          src={userData?.avatar}
-                          className={classes.profilePicture}
+                  <Card className={classes.profileCard}>
+                    <div className={classes.profileInformation}>
+                      <div className={classes.profileName}>
+                        <Typography variant="h5">{userData?.name}</Typography>
+                      </div>
+                      <div className={classes.pictureDiv}>
+                        <Box
+                          border={2}
+                          borderRadius="50%"
+                          borderColor="secondary.main"
+                        >
+                          <Avatar
+                            src={userData?.avatar}
+                            className={classes.profilePicture}
+                          />
+                        </Box>
+                      </div>
+                      <div className={classes.upload}>
+                        <Input
+                          required
+                          accept="image/*"
+                          onChange={fileSelectedHandler}
+                          type="file"
+                          id="imageUpload"
                         />
-                      </Box>
+                        <label for="imageUpload">
+                          {" "}
+                          <AddAPhotoIcon
+                            color="secondary"
+                            fontSize="small"
+                            style={{ cursor: "pointer" }}
+                          />
+                        </label>
+                      </div>
                     </div>
-                    <div className={classes.upload}>
-                      <Input
-                        required
-                        accept="image/*"
-                        onChange={fileSelectedHandler}
-                        type="file"
-                        id="imageUpload"
-                      />
-                      <label for="imageUpload">
-                        {" "}
-                        <AddAPhotoIcon
-                          fontSize="small"
-                          style={{ cursor: "pointer" }}
-                        />
-                      </label>
-                    </div>
+                  </Card>
+                </Box>
+              )}
+
+              {/* Favorite Blog */}
+
+              {showFavorites && (
+                <div className={classes.favoriteRecipes}>
+                  <div className={classes.mainDiv}>
+                    <Box
+                      mt={2}
+                      p={1}
+                      boxShadow={3}
+                      border={2}
+                      borderRadius={25}
+                      borderColor="secondary.main"
+                    >
+                      <Typography variant="h3">Favorites</Typography>
+                    </Box>
+                    {userData && (
+                      <RecipeList currentRecipes={userData?.favoriteRecipes} />
+                    )}
                   </div>
-                </Card>
-              </Box>
-              <div className={classes.favoriteRecipes}>
-                <div className={classes.heading}>
-                  <Typography variant="h3">Favorites</Typography>
-                  {userData && (
-                    <RecipeList currentRecipes={userData?.favoriteRecipes} />
-                  )}
                 </div>
-              </div>
+              )}
             </div>
           ) : (
             <div>
               <div className={classes.favoriteRecipes}>
-                <div className={classes.heading}>
+                <div className={classes.mainDiv}>
                   <Typography color="primary" variant="h5">
                     Your
                   </Typography>

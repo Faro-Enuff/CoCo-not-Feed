@@ -90,7 +90,9 @@ const RecipeList = ({ currentRecipes }) => {
                           {likes
                             ?.filter((e) => e.title === recipe.title)
                             .map((selectedLikes, key) => (
-                              <p key={key}>{selectedLikes?.likes?.length}</p>
+                              <Typography variant="subtitle1" key={key}>
+                                <b>{selectedLikes?.likes?.length}</b>
+                              </Typography>
                             ))}
                         </Button>
                       </div>

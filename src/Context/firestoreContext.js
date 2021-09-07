@@ -12,27 +12,7 @@ export const FirestoreContextProvider = ({ children }) => {
   // const [recipes] = useCollectionData(query, { idField: "id" });
   let history = useHistory();
   const { user } = useContext(AuthContext);
-  const [userData, setUserData] = useState([]);
   const [likes, setLikes] = useState([]);
-
-  ////////////////////////////////////////////////////////////////////////////
-  // Update user Data
-  ////////////////////////////////////////////////////////////////////////////
-
-  const updateUserData = (updateData) => {
-    db.collection("users")
-      .doc(user.uid)
-      .set({
-        ...updateData,
-      })
-      .then(() => {
-        console.log("Document successfully written!");
-        setUserData({ ...updateData });
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
-  };
 
   ////////////////////////////////////////////////////////////////////////////
   // Favorite Functionalities by creating user DOC
@@ -72,21 +52,6 @@ export const FirestoreContextProvider = ({ children }) => {
         id,
       }),
     });
-  };
-
-  ////////////////////////////////////////////////////////////////////////////
-  // Update userData useState
-  ////////////////////////////////////////////////////////////////////////////
-
-  const allocateUserData = () => {
-    if (user) {
-      db.collection("users")
-        .doc(user?.uid)
-        .onSnapshot((doc) => {
-          // console.log("Current data: ", doc?.data());
-          setUserData(doc?.data());
-        });
-    }
   };
 
   ////////////////////////////////////////////////////////////////////////////
@@ -140,11 +105,8 @@ export const FirestoreContextProvider = ({ children }) => {
   return (
     <FirestoreContext.Provider
       value={{
-        updateUserData,
         addNewFavorite,
         deleteFavorite,
-        allocateUserData,
-        userData,
         likes,
         setCommunityLikes,
         allocateLikes,
