@@ -95,7 +95,7 @@ const Profile = () => {
   let history = useHistory();
 
   // useContext for the AuthContext, to have the user object for verification of displaying data as well as the signOut function
-  const { user, signOut, allocateUserData, userData, updateUserData } =
+  const { user, allocateUserData, userData, updateUserData } =
     useContext(AuthContext);
 
   // Realtime update of the Favorites in Firestore gets initialized whenever the user changes
@@ -257,7 +257,7 @@ const Profile = () => {
                       borderRadius={25}
                       borderColor="secondary.main"
                     >
-                      <Typography variant="h3">Favorites</Typography>
+                      <Typography variant="h4">Your CoCo Feed</Typography>
                     </Box>
                     {userData && (
                       <RecipeList currentRecipes={userData?.favoriteRecipes} />

@@ -62,7 +62,7 @@ export default function CustomizedMenus({
 }) {
   const classes = useStyles();
   let history = useHistory();
-  const { user, signOut } = useContext(AuthContext);
+  const { signOut } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {

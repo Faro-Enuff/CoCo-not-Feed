@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Carousel from "./Carousel";
+
+// Library Import
 import SwipeableViews from "react-swipeable-views";
+
+// Internal Imports
+import Carousel from "./Carousel";
+
+// Core Imports
+import { CardContent, Typography, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((muiTheme) => ({
   recipeText: {
@@ -41,10 +45,10 @@ const RecipeInstructions = ({ stepInstructions, textInstructions }) => {
           <Typography paragraph>{sorryText}</Typography>
         )
       ) : (
-        <Typography paragraph className={classes.recipeText}>
+        <div className={classes.recipeText}>
           <Typography variant="h6">Instructions:</Typography>
           {textInstructions.replace(/<[^>]+>/g, "") || sorryText}
-        </Typography>
+        </div>
       )}
       <div className={classes.btn}>
         <Button variant="contained" color="secondary" onClick={handleViewClick}>

@@ -26,9 +26,10 @@ const useStyles = makeStyles((muiTheme) => ({
     width: "100%",
   },
   header: {
-    borderRadius: 20,
+    borderRadius: 25,
     color: "#d7ccc8",
     display: "flex",
+    marginTop: "5%",
     justifyContent: "center",
     backgroundColor: "#efebe9",
     textShadow: "1px 1px 1px #000000",
@@ -106,17 +107,16 @@ const PaginationRecipes = () => {
     <Container component="main" maxWidth="xs">
       <Box
         mt={2}
-        p={2}
+        p={1}
         boxShadow={3}
         border={2}
         borderRadius={25}
         borderColor="secondary.main"
+        className={classes.header}
       >
-        <div className={classes.header}>
-          <Typography color="secondary" variant="h4">
-            Results
-          </Typography>
-        </div>
+        <Typography color="secondary" variant="h4">
+          Your CoCravings
+        </Typography>
       </Box>
       <div className={classes.recipePreview}>
         <Grid container spacing={2}>
@@ -142,8 +142,9 @@ const PaginationRecipes = () => {
                           color="primary"
                           variant="contained"
                           className={classes.btn}
+                          onClick={() => onClickHandler(number)}
                         >
-                          <a onClick={() => onClickHandler(number)}>{number}</a>
+                          {number}
                         </Button>
                       </Box>
                     </li>

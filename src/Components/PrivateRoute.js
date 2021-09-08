@@ -1,5 +1,5 @@
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  console.log("rest :>> ", rest);
+  // console.log("rest :>> ", rest);
   const { user } = useContext(AuthContext);
   return (
     <Route

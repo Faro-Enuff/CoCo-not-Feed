@@ -28,7 +28,7 @@ const RecipeNutrientsMicro = ({ nutrition }) => {
         };
       })
     );
-    console.log(rowsMicro);
+    // console.log(rowsMicro);
   }, []);
 
   return (

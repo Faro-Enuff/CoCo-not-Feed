@@ -64,7 +64,7 @@ const Comments = ({ recipeTitle, recipeId }) => {
   //Retrieving all Comments from the db
   const { commentCollection } = useContext(CommentContext);
   // console.log(commentCollection);
-  const { user, userData, allocateUserData } = useContext(AuthContext);
+  const { user, allocateUserData } = useContext(AuthContext);
 
   // Make the scroll from bottom to top
   const dummy = useRef(null);

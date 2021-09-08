@@ -11,7 +11,6 @@ import {
   Typography,
   Dialog,
   DialogContent,
-  DialogTitle,
   IconButton,
   Slide,
 } from "@material-ui/core";

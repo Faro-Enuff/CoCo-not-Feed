@@ -18,8 +18,8 @@ export const CommentContextProvider = ({ children }) => {
       // console.log(commentText);
       // console.log(recipeTitle);
       const commentsRef = db.collection("recipes").doc(recipeId.toString());
-      console.log(commentsRef);
-      console.log(userData?.avatar);
+      // console.log(commentsRef);
+      // console.log(userData?.avatar);
       commentsRef
         .set(
           {

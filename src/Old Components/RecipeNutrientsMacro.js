@@ -28,7 +28,7 @@ const RecipeNutrientsMacro = ({ nutrition }) => {
         };
       })
     );
-    console.log(rowsMacro);
+    // console.log(rowsMacro);
   }, []);
 
   return (

@@ -1,6 +1,5 @@
 import { useState, createContext, useEffect } from "react";
 import firebase, { googleAuth, db } from "../firebase";
-import firebaseapp from "firebase/app";
 
 export const AuthContext = createContext();
 
@@ -18,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
-        console.log(`user`, uid);
+        // console.log(`user`, uid);
         // setUser(user);
       } else {
         // User is signed out
@@ -74,7 +73,7 @@ export const AuthContextProvider = ({ children }) => {
         const user = firebase.auth().currentUser;
         setUser(user);
         console.log(`user`, user);
-        console.log(`user.displayName`, user.displayName);
+        // console.log(`user.displayName`, user.displayName);
         addDocUserData(user);
       })
       .catch((error) => {
@@ -107,7 +106,6 @@ export const AuthContextProvider = ({ children }) => {
         console.log(`errorCode`, errorCode);
       });
   };
-  console.log(user);
 
   ////////////////////////////////////////////////////////////////////////////
   // SignOut Function
