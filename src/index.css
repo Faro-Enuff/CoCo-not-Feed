@@ -2,6 +2,7 @@
 * {
   margin: 0;
   background-color: "#efebe9";
+  overscroll-behavior: none;
 }
 .App {
   height: 100vh;
@@ -9,6 +10,7 @@
 body {
   margin: 0;
   padding: 0;
+  /* Avoid scrolling on boundaries */
   overscroll-behavior: none;
 }
 
