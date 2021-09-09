@@ -49,6 +49,7 @@ const useStyles = makeStyles((muiTheme) => ({
   btnArea: {
     display: "flex",
     maxWidth: "100%",
+    overflow: "hidden",
   },
   btn: {
     display: "block",
@@ -68,7 +69,7 @@ const PaginationRecipes = () => {
 
   // useStates for the "self made" Pagination Feature
   const [currentPage, setCurrentPage] = useState(1);
-  const [recipesPerPage, setRecipesPerPage] = useState(5);
+  const [recipesPerPage, setRecipesPerPage] = useState(10);
   const [pageNumbers, setPageNumbers] = useState([]);
 
   // variables for the "self made" Pagination Feature

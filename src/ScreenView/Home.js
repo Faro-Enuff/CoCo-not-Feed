@@ -27,7 +27,7 @@ const Home = () => {
       search.intolerances
     }&instructionsRequired=true&sort=${search.preference}&sortDirection=${
       order ? "asc" : "desc"
-    }`;
+    }&number=40`;
 
     // console.log(url);
 
