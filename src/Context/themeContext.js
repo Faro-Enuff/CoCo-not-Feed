@@ -47,7 +47,6 @@ export const ThemeProvider = ({ children }) => {
     },
     palette: {
       background: {
-        paper: "#efebe9",
         default: "#efebe9",
       },
       primary: {
