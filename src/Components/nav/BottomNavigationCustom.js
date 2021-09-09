@@ -14,6 +14,7 @@ import { AuthContext } from "../../Context/authContext";
 const useStyles = makeStyles({
   root: {
     width: "100%",
+    marginBottom: "1%",
     backgroundColor: "#a1887f",
   },
   navigation: {

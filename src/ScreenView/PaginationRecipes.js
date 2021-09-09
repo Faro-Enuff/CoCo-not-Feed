@@ -29,7 +29,7 @@ const useStyles = makeStyles((muiTheme) => ({
     borderRadius: 25,
     color: "#d7ccc8",
     display: "flex",
-    marginTop: "5%",
+    marginTop: "12%",
     justifyContent: "center",
     backgroundColor: "#efebe9",
     textShadow: "1px 1px 1px #000000",

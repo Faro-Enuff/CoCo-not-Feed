@@ -52,9 +52,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     marginRight: "5%",
+    justifyContent: "right",
   },
   pictureDiv: {
     display: "flex",
+    alignItems: "center",
+    justifyContent: "right",
   },
   profilePicture: {
     width: theme.spacing(8),
@@ -62,8 +65,9 @@ const useStyles = makeStyles((theme) => ({
   },
   upload: {
     display: "flex",
-    alignItems: "end",
+    alignItems: "center",
     marginLeft: "2%",
+    justifyContent: "right",
   },
   logoPosition: {
     display: "flex",

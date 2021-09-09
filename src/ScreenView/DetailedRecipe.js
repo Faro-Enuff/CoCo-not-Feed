@@ -209,7 +209,7 @@ const DetailedRecipe = () => {
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <Box p={1} alignItems="center" className={classes.scoreBox}>
+                    <Box p={0} alignItems="center" className={classes.scoreBox}>
                       <Box mr={5}>
                         <Typography variant="h6">Scores:</Typography>
                       </Box>

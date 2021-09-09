@@ -26,9 +26,28 @@ export const ThemeProvider = ({ children }) => {
       fontWeightRegular: 400,
       fontWeightMedium: 500,
       fontWeightBold: 600,
+      h1: {
+        fontFamily: "Qicksand",
+      },
+      h2: {
+        fontFamily: "Qicksand",
+      },
+      h3: {
+        fontFamily: "Qicksand",
+      },
+      h4: {
+        fontFamily: "Qicksand",
+      },
+      h5: {
+        fontFamily: "Qicksand",
+      },
+      h6: {
+        fontFamily: "Qicksand",
+      },
     },
     palette: {
       background: {
+        paper: "#efebe9",
         default: "#efebe9",
       },
       primary: {

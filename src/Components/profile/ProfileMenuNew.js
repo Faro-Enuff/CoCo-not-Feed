@@ -88,6 +88,7 @@ export default function CustomizedMenus({
         color="primary"
         style={{ textTransform: "none" }}
         onClick={handleClick}
+        size="large"
       >
         Explore Your CoCo
       </Button>

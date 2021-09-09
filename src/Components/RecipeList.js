@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
   likeButton: {
     display: "flex",
+    flexDirection: "row",
     textAlign: "right",
     justifyContent: "right",
-    alignItems: "right",
+    alignItems: "center",
   },
 }));
 
@@ -81,21 +82,19 @@ const RecipeList = ({ currentRecipes }) => {
                       </CardContent>
                     </CardActionArea>
                     <CardActions className={classes.likeButton}>
-                      <div>
-                        <Button
-                          size="medium"
-                          color="secondary"
-                          endIcon={<FavoriteBorderIcon />}
-                        >
-                          {likes
-                            ?.filter((e) => e.title === recipe.title)
-                            .map((selectedLikes, key) => (
-                              <Typography variant="subtitle1" key={key}>
-                                <b>{selectedLikes?.likes?.length}</b>
-                              </Typography>
-                            ))}
-                        </Button>
-                      </div>
+                      <Button
+                        size="medium"
+                        color="secondary"
+                        endIcon={<FavoriteBorderIcon />}
+                      >
+                        {likes
+                          ?.filter((e) => e.title === recipe.title)
+                          .map((selectedLikes, key) => (
+                            <Typography variant="subtitle1" key={key}>
+                              <b>{selectedLikes?.likes?.length}</b>
+                            </Typography>
+                          ))}
+                      </Button>
                     </CardActions>
                   </Card>
                 </Box>
