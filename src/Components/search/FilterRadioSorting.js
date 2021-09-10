@@ -57,7 +57,7 @@ const FilterRadioSorting = () => {
         <FormControlLabel
           value="protein"
           control={<Radio color="primary" />}
-          label="Potein"
+          label="Protein"
           labelPlacement="bottom"
         />
         <FormControlLabel
