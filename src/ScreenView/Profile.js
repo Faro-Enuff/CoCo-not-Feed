@@ -43,28 +43,21 @@ const useStyles = makeStyles((theme) => ({
   profileInformation: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "right",
     marginRight: "5%",
     marginTop: "5%",
     marginBottom: "5%",
   },
   profileName: {
-    display: "flex",
-    alignItems: "center",
     marginRight: "5%",
     marginLeft: "20%",
-  },
-  pictureDiv: {
-    display: "flex",
-    alignItems: "center",
   },
   profilePicture: {
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
   upload: {
-    display: "flex",
-    alignItems: "center",
     marginLeft: "2%",
   },
   logoPosition: {
