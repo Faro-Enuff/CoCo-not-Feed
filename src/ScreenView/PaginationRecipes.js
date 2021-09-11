@@ -49,13 +49,30 @@ const useStyles = makeStyles((muiTheme) => ({
   btnArea: {
     display: "flex",
     maxWidth: "100%",
+    flexWrap: "wrap",
     overflow: "hidden",
+    marginBottom: "15%",
   },
   btn: {
     display: "block",
-    marginTop: muiTheme.spacing(4),
     fontWeight: "bold",
     borderRadius: 25,
+  },
+  buttonItems: {
+    listStyleType: "none",
+    padding: 0,
+    margin: 0,
+  },
+  ul: {
+    margin: 0,
+    padding: 0,
+    listStyleType: "none",
+    display: "flex",
+    maxWidth: "100%",
+    flexWrap: "wrap",
+    overflow: "hidden",
+    marginTop: "5%",
+    marginBottom: "5%",
   },
 }));
 
@@ -137,11 +154,18 @@ const PaginationRecipes = () => {
               <ul className={classes.ul}>
                 {pageNumbers.length >= 1 &&
                   pageNumbers.map((number) => (
-                    <li key={number} className="page-item">
-                      <Box m={1} boxShadow={3} borderRadius={25}>
+                    <li key={number} className={classes.buttonItems}>
+                      <Box
+                        m={1}
+                        boxShadow={3}
+                        borderRadius={25}
+                        border={1}
+                        borderColor="primary.main"
+                      >
                         <Button
                           color="primary"
-                          variant="contained"
+                          variant="outlined"
+                          size="medium"
                           className={classes.btn}
                           onClick={() => onClickHandler(number)}
                         >

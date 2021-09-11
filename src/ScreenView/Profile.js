@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
     textShadow: "2px 2px 2px #000000",
   },
   profileCard: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "right",
     borderRadius: 25,
     backgroundColor: "#efebe9",
   },
@@ -55,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     marginRight: "5%",
+    marginLeft: "20%",
   },
   pictureDiv: {
     display: "flex",

@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   likeButton: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     textAlign: "right",
     justifyContent: "right",
     alignItems: "center",
