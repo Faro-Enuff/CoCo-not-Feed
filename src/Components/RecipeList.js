@@ -35,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     borderRadius: 20,
   },
-  likeButton: {
+  likeButtonDiv: {
     display: "flex",
     flexDirection: "column",
     textAlign: "right",
     justifyContent: "right",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 }));
 
@@ -81,11 +81,12 @@ const RecipeList = ({ currentRecipes }) => {
                         </Typography>
                       </CardContent>
                     </CardActionArea>
-                    <CardActions className={classes.likeButton}>
+                    <CardActions className={classes.likeButtonDiv}>
                       <Button
                         size="medium"
                         color="secondary"
                         endIcon={<FavoriteBorderIcon />}
+                        className={classes.likeButton}
                       >
                         {likes
                           ?.filter((e) => e.title === recipe.title)
