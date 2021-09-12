@@ -177,21 +177,17 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const value = {
+    user,
+    signUp,
+    signIn,
+    signOut,
+    signInWithGooglePopUp,
+    updateUserData,
+    allocateUserData,
+    userData,
+  };
+
   // Return the Provider for the Router
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        signUp,
-        signIn,
-        signOut,
-        signInWithGooglePopUp,
-        updateUserData,
-        allocateUserData,
-        userData,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

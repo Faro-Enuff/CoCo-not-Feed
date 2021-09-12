@@ -13,19 +13,15 @@ export const FormContextProvider = ({ children }) => {
   const [recipePreview, setRecipePreview] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
-  return (
-    <FormContext.Provider
-      value={{
-        search,
-        setSearch,
-        recipePreview,
-        setRecipePreview,
-        setIsPending,
-        order,
-        setOrder,
-      }}
-    >
-      {children}
-    </FormContext.Provider>
-  );
+  const value = {
+    search,
+    setSearch,
+    recipePreview,
+    setRecipePreview,
+    setIsPending,
+    order,
+    setOrder,
+  };
+
+  return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
 };

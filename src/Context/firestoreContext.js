@@ -102,17 +102,17 @@ export const FirestoreContextProvider = ({ children }) => {
       });
   };
 
+  const value = {
+    addNewFavorite,
+    deleteFavorite,
+    likes,
+    setCommunityLikes,
+    allocateLikes,
+    deleteLikes,
+  };
+
   return (
-    <FirestoreContext.Provider
-      value={{
-        addNewFavorite,
-        deleteFavorite,
-        likes,
-        setCommunityLikes,
-        allocateLikes,
-        deleteLikes,
-      }}
-    >
+    <FirestoreContext.Provider value={value}>
       {children}
     </FirestoreContext.Provider>
   );

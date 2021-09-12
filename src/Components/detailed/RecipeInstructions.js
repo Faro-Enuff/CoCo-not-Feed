@@ -42,12 +42,14 @@ const RecipeInstructions = ({ stepInstructions, textInstructions }) => {
             ))}
           </SwipeableViews>
         ) : (
-          <Typography paragraph>{sorryText}</Typography>
+          <Typography variant="body1">{sorryText}</Typography>
         )
       ) : (
         <div className={classes.recipeText}>
           <Typography variant="h6">Instructions:</Typography>
-          {textInstructions.replace(/<[^>]+>/g, "") || sorryText}
+          <Typography variant="body1">
+            {textInstructions.replace(/<[^>]+>/g, "") || sorryText}
+          </Typography>
         </div>
       )}
       <div className={classes.btn}>

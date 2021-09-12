@@ -14,9 +14,6 @@ export const CommentContextProvider = ({ children }) => {
 
   const writeNewComment = (recipeId, recipeTitle, commentText) => {
     if (user) {
-      // console.log(typeof recipeId);
-      // console.log(commentText);
-      // console.log(recipeTitle);
       const commentsRef = db.collection("recipes").doc(recipeId.toString());
       // console.log(commentsRef);
       // console.log(userData?.avatar);
@@ -51,11 +48,9 @@ export const CommentContextProvider = ({ children }) => {
       });
   };
 
+  const value = { writeNewComment, allocateComments, commentCollection };
+
   return (
-    <CommentContext.Provider
-      value={{ writeNewComment, allocateComments, commentCollection }}
-    >
-      {children}
-    </CommentContext.Provider>
+    <CommentContext.Provider value={value}>{children}</CommentContext.Provider>
   );
 };
