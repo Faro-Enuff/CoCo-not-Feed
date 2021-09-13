@@ -109,10 +109,9 @@ const PaginationRecipes = () => {
   // console.log(Math.ceil(recipePreview?.length / recipesPerPage));
 
   useEffect(() => {
-    console.log(recipePreview);
+    // console.log(recipePreview);
     setPageNumbers(newArray(Math.ceil(recipePreview?.length / recipesPerPage)));
   }, [recipePreview]);
-  console.log(recipePreview);
   // console.log(pageNumbers);
 
   // Responsible for changing the current page & by this changing the content
