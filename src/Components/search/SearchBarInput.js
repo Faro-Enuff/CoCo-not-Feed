@@ -47,7 +47,10 @@ const SearchBarInput = ({ handleKeyEnter }) => {
   const { search, setSearch } = useContext(FormContext);
 
   const handleSearch = (event) => {
-    setSearch({ ...search, [event.target.name]: event.target.value });
+    setSearch({
+      ...search,
+      [event.target.name]: event.target.value.split(/[ ,]+/).join(", "),
+    });
   };
 
   return (

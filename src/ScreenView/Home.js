@@ -29,7 +29,7 @@ const Home = () => {
       order ? "asc" : "desc"
     }&number=40`;
 
-    // console.log(url);
+    console.log(url);
 
     // Fetch Function
     fetchFunction(url, setRecipePreview, setIsPending);
@@ -42,7 +42,7 @@ const Home = () => {
       searchTerm: "",
       intolerances: "",
       diet: "",
-      preference: "popularity",
+      preference: "calories",
     });
   };
 

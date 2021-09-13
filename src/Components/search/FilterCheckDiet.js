@@ -14,6 +14,7 @@ const FilterCheckDiet = () => {
     Vegetarian: false,
     Pescetarian: false,
     Paleo: false,
+    Shit: false,
   });
 
   const handleChangeDiet = (event) => {
@@ -24,7 +25,7 @@ const FilterCheckDiet = () => {
   };
   // console.log(checkBoxDiet);
 
-  const { Vegan, Vegetarian, Pescetarian, Paleo } = checkBoxDiet;
+  const { Vegan, Vegetarian, Pescetarian, Paleo, Shit } = checkBoxDiet;
 
   useEffect(() => {
     const di = Object.keys(checkBoxDiet)
@@ -80,6 +81,17 @@ const FilterCheckDiet = () => {
               />
             }
             label="Paleo"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={Shit}
+                onChange={handleChangeDiet}
+                name="Shit"
+                color="primary"
+              />
+            }
+            label="Nut give a shit !"
           />
         </FormGroup>
       </FormControl>

@@ -38,16 +38,16 @@ const FilterRadioSorting = () => {
         name="preference"
         value={search.preference}
         onChange={handleChange}
-        defaultValue="popularity"
+        defaultValue="calories"
         className={classes.radioDirection}
         row
       >
-        <FormControlLabel
+        {/* <FormControlLabel
           value="popularity"
           control={<Radio color="primary" />}
           label="Popularity"
           labelPlacement="bottom"
-        />
+        /> */}
         <FormControlLabel
           value="calories"
           control={<Radio color="primary" />}
@@ -57,7 +57,7 @@ const FilterRadioSorting = () => {
         <FormControlLabel
           value="protein"
           control={<Radio color="primary" />}
-          label="Protein"
+          label="Proteins"
           labelPlacement="bottom"
         />
         <FormControlLabel
@@ -69,7 +69,7 @@ const FilterRadioSorting = () => {
         <FormControlLabel
           value="total-fat"
           control={<Radio color="primary" />}
-          label="Total Fat"
+          label="Fats"
           labelPlacement="bottom"
         />
       </RadioGroup>
