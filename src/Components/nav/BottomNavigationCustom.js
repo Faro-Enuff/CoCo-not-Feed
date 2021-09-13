@@ -29,11 +29,9 @@ const useStyles = makeStyles({
 });
 
 const BottomNavigationCustom = () => {
-  let history = useHistory();
+  const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = useState("recents");
-
-  const { user } = useContext(AuthContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -51,7 +49,7 @@ const BottomNavigationCustom = () => {
       setValue("recents");
     }, 1500);
   };
-  console.log(`user`, user?.uid);
+
   return (
     <Container component="main" maxWidth="xs">
       <Grid container>

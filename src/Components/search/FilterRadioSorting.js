@@ -28,7 +28,7 @@ const FilterRadioSorting = () => {
       <FormLabel component="legend" style={{ color: "#fff" }}>
         Sorting Preference
         {
-          <IconButton onClick={handleOrder}>
+          <IconButton size="large" color="primary" onClick={handleOrder}>
             {order ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         }

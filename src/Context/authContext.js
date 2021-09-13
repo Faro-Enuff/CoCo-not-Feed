@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState("Not logged in");
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
 
   ////////////////////////////////////////////////////////////////////////////
   //Auth State Observer
@@ -18,7 +18,7 @@ export const AuthContextProvider = ({ children }) => {
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         // console.log(`user`, uid);
-        // setUser(user);
+        setUser(user);
       } else {
         // User is signed out
         setUser(null);
@@ -66,15 +66,14 @@ export const AuthContextProvider = ({ children }) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-
         user.updateProfile({ displayName: name });
       })
       .then(() => {
         const user = firebase.auth().currentUser;
-        setUser(user);
-        console.log(`user`, user);
-        // console.log(`user.displayName`, user.displayName);
+        console.log(`userCurrent`, user);
         addDocUserData(user);
+        setUser(user);
+        // console.log(`user.displayName`, user.displayName);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -129,10 +128,10 @@ export const AuthContextProvider = ({ children }) => {
 
   const addDocUserData = (user) => {
     db.collection("users")
-      .doc(user?.uid)
+      .doc(user.uid)
       .set({
-        name: user?.displayName,
-        avatar: user?.photoURL || "",
+        name: user.displayName,
+        avatar: user.photoURL || "",
         favoriteRecipes: [],
       })
       .then((docRef) => {
@@ -149,7 +148,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const updateUserData = (updateData) => {
     db.collection("users")
-      .doc(user.uid)
+      .doc(user?.uid)
       .set({
         ...updateData,
       })
@@ -162,12 +161,32 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
+  const updateUserPhoto = (url) => {
+    const user = firebase.auth().currentUser;
+    // console.log("user before URL", user);
+    // console.log(url);
+    user
+      .updateProfile({
+        photoURL: url,
+      })
+      .then(() => {
+        // Update successful
+        setUserData(user);
+        // console.log("user after URL", user);
+      })
+      .catch((error) => {
+        // An error occurred
+        console.log(error);
+      });
+  };
+
   ////////////////////////////////////////////////////////////////////////////
   // Update userData useState
   ////////////////////////////////////////////////////////////////////////////
 
   const allocateUserData = () => {
     if (user) {
+      // console.log(user);
       db.collection("users")
         .doc(user?.uid)
         .onSnapshot((doc) => {
@@ -186,6 +205,7 @@ export const AuthContextProvider = ({ children }) => {
     updateUserData,
     allocateUserData,
     userData,
+    updateUserPhoto,
   };
 
   // Return the Provider for the Router

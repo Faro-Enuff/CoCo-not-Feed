@@ -204,11 +204,7 @@ const DetailedRecipe = () => {
                     image={recipeDetails.image}
                     title={`recipe-${recipeDetails.title}`}
                   />
-                  <CardContent
-                    className={classes.cardContent}
-                    justifyContent="center"
-                    alignItems="center"
-                  >
+                  <CardContent className={classes.cardContent}>
                     <Box p={0} alignItems="center" className={classes.scoreBox}>
                       <Box mr={5}>
                         <Typography variant="h6">Scores:</Typography>

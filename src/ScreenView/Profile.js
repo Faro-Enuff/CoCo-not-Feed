@@ -90,7 +90,7 @@ const Profile = () => {
   let history = useHistory();
 
   // useContext for the AuthContext, to have the user object for verification of displaying data as well as the signOut function
-  const { user, allocateUserData, userData, updateUserData } =
+  const { user, allocateUserData, userData, updateUserData, updateUserPhoto } =
     useContext(AuthContext);
 
   // Realtime update of the Favorites in Firestore gets initialized whenever the user changes
@@ -138,13 +138,15 @@ const Profile = () => {
           .ref(`avatar/`)
           .child(`${file.name}`)
           .getDownloadURL()
-          .then((url) =>
+          .then((url) => {
+            updateUserPhoto(url);
+
             updateUserData({
               avatar: url,
               name: user?.displayName,
               favoriteRecipes: userData?.favoriteRecipes,
-            })
-          );
+            });
+          });
       }
     );
   };
@@ -203,7 +205,9 @@ const Profile = () => {
                   <Card className={classes.profileCard}>
                     <div className={classes.profileInformation}>
                       <div className={classes.profileName}>
-                        <Typography variant="h5">{userData?.name}</Typography>
+                        <Typography variant="h5">
+                          {user?.displayName}
+                        </Typography>
                       </div>
                       <div className={classes.pictureDiv}>
                         <Box
@@ -212,7 +216,7 @@ const Profile = () => {
                           borderColor="secondary.main"
                         >
                           <Avatar
-                            src={userData?.avatar}
+                            src={user.photoURL}
                             className={classes.profilePicture}
                           />
                         </Box>
@@ -225,7 +229,7 @@ const Profile = () => {
                           type="file"
                           id="imageUpload"
                         />
-                        <label for="imageUpload">
+                        <label htmlFor="imageUpload">
                           {" "}
                           <AddAPhotoIcon
                             color="secondary"

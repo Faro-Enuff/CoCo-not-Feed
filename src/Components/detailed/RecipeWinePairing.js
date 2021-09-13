@@ -22,7 +22,7 @@ const RecipeWinePairing = ({ wines }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [pairedWines, setPairedWines] = useState([]);
-  console.log(wines);
+  // console.log(wines);
 
   useEffect(() => {
     setPairedWines(

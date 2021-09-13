@@ -43,7 +43,7 @@ export const CommentContextProvider = ({ children }) => {
     db.collection("recipes")
       .doc(recipeId.toString())
       .onSnapshot((doc) => {
-        console.log("Current data: ", doc?.data());
+        // console.log("Current data: ", doc?.data());
         setCommentCollection(doc.data()?.comments);
       });
   };
