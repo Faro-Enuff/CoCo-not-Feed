@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // React Router Dom
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 // Internal Imports
 import { AuthContext } from "../../Context/authContext";
 // Icons
@@ -16,7 +16,6 @@ import {
   IconButton,
   CssBaseline,
   TextField,
-  Link,
   Grid,
   Box,
 } from "@material-ui/core";
@@ -25,9 +24,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        My CoCo(not) Feed
-      </Link>{" "}
+      My CoCo(not) Feed
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -58,9 +55,13 @@ const useStyles = makeStyles((muiTheme) => ({
     margin: muiTheme.spacing(3, 0, 2),
   },
   googleAuth: {
-    fontSize: 16,
+    fontSize: 14,
     cursor: "pointer",
     color: muiTheme.palette.primary.dark,
+  },
+  signUpLink: {
+    textDecoration: "none",
+    color: muiTheme.palette.secondary.dark,
   },
 }));
 
@@ -70,7 +71,7 @@ const SignIn = () => {
 
   // Functionality to go Back to the previous window, in case you do not want to sign in
   const handleClose = () => {
-    history.goBack();
+    history.push("/profile");
   };
   // UseState for the profile relevant login data
   const [profile, setProfile] = useState({
@@ -155,7 +156,7 @@ const SignIn = () => {
               onClick={handleGoogleLink}
               className={classes.googleAuth}
             >
-              <b>Or, sign in with your Google Account.</b>
+              <b>Sign in with your Google Account.</b>
             </Link>
           </Grid>
           <Button
@@ -169,8 +170,8 @@ const SignIn = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/signup" variant="body2" color="secondary">
-                {"Don't have an account? Sign Up"}
+              <Link to="/signup" variant="body2" className={classes.signUpLink}>
+                Don't have an account? <b>Sign Up</b>
               </Link>
             </Grid>
           </Grid>

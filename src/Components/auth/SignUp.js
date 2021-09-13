@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 // Internal Imports
 import { AuthContext } from "../../Context/authContext";
@@ -11,7 +11,6 @@ import {
   Container,
   Grid,
   Typography,
-  Link,
   TextField,
   CssBaseline,
   Box,
@@ -24,9 +23,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        My CoCo(not) Feed
-      </Link>{" "}
+      My CoCo(not) Feed
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -56,6 +53,10 @@ const useStyles = makeStyles((muiTheme) => ({
   submit: {
     margin: muiTheme.spacing(3, 0, 2),
   },
+  signInLink: {
+    textDecoration: "none",
+    color: muiTheme.palette.secondary.dark,
+  },
 }));
 const SignUp = () => {
   let history = useHistory();
@@ -64,7 +65,7 @@ const SignUp = () => {
 
   // Functionality to go Back to the previous window, in case you do not want to sign in
   const handleClose = () => {
-    history.goBack();
+    history.push("/profile");
   };
 
   const [profile, setProfile] = useState({
@@ -160,7 +161,7 @@ const SignUp = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2" color="secondary">
+              <Link to="/signin" variant="body2" className={classes.signInLink}>
                 Already have an account? Sign in
               </Link>
             </Grid>
